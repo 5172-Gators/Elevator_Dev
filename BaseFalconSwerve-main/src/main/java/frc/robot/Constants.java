@@ -13,6 +13,16 @@ import frc.lib.util.SwerveModuleConstants;
 public final class Constants {
     public static final double stickDeadband = 0.1;
 
+    public static final int wristMotorId = 0;
+    public static final int intakeMotorId = 53;
+    public static final int elevatorMotor1 = 41;
+    public static final int elecvatorMotor2 = 42;
+
+   
+
+
+
+
     public static final class Swerve {
         public static final int pigeonID = 14;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
@@ -80,7 +90,7 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 4.5; //TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 3.5; //TODO: This must be tuned to specific robot
         /** Radians per Second */
         public static final double maxAngularVelocity = 10.0; //TODO: This must be tuned to specific robot
 
@@ -144,5 +154,19 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+    }
+
+    public static final class Elevator {
+        public static final int motorLeftId = 41;
+        public static final int motorRightId = 42;
+
+        public static final double elevatorKP = 1.5;
+        public static final double elevatorKI = .2;
+        public static final double elevatorKD = .05;
+
+        public static final double maxMotorVoltage = 5;
+
+        public static final int currentLimit = 30;
+
     }
 }

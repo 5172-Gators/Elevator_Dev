@@ -1,19 +1,15 @@
 package frc.robot;
 
-import java.util.function.BooleanSupplier;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.autos.*;
 import frc.robot.commands.*;
-import frc.robot.driverstation.DriveRotateStick;
-import frc.robot.driverstation.DriveTranslateStick;
-import frc.robot.driverstation.OperatorStick;
 import frc.robot.subsystems.*;
 
 /**
@@ -24,25 +20,26 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
     /* Controllers */
-    /* OI (operator interface) */
-    private final DriveTranslateStick translateStick = new DriveTranslateStick(0);
-    private final DriveRotateStick rotateStick = new DriveRotateStick(1);
-    private final OperatorStick operatorStick = new OperatorStick(2);
-
-    private final Joystick m_translateStick = new Joystick(0);
-    private final Joystick m_rotateStick = new Joystick(1);
-    private final Joystick m_operatorStick = new Joystick(2);
+    private final Joystick driver = new Joystick(0);
+    private final Joystick driver2 = new Joystick(1);
 
 
     /* Drive Controls */
-    private final int translationAxis = Joystick.AxisType.kY.value;  //getYChannel();//XboxController.Axis.kLeftY.value;
- //private final int translationAxis = XboxController.Axis.kLeftY.value;
-    private final int strafeAxis =  Joystick.AxisType.kX.value; //translateStick.getXChannel();//XboxController.Axis.kLeftX.value;
-    private final int rotationAxis = Joystick.AxisType.kX.value;//XboxController.Axis.kRightX.value;
+
+    private final int j_translationAxis = Joystick.AxisType.kY.value;
+    private final int j_strafeAxis = Joystick.AxisType.kX.value;
+    private final int j_rotationAxis = Joystick.AxisType.kX.value;
+    //private final int strafeAxis =  Joystick.AxisType.kX.value;
+   // private final int translationAxis = XboxController.Axis.kLeftY.value;
+    //private final int strafeAxis = XboxController.Axis.kLeftX.value;
+    //private final int rotationAxis = XboxController.Axis.kRightY.value;
 
     /* Driver Buttons */
-    private final JoystickButton zeroGyro =  new JoystickButton(m_rotateStick,2);//new JoystickButton(rotateStick, 2);//, XboxController.Button.kY.value);
-    private final JoystickButton robotCentric = new JoystickButton(m_translateStick, 11);//, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton zeroGyro = new JoystickButton(driver2,2);
+    private final JoystickButton robotCentric = new JoystickButton(driver2,11);
+
+   // private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
+   // private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -53,15 +50,10 @@ public class RobotContainer {
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
-                ()-> -translateStick.getY(),
-                ()-> translateStick.getX(),
-                () -> rotateStick.getX()
-               //() ->robotCentric.getAsBoolean()
-
-               // () -> -translateStick.getRawAxis(translationAxis), 
-                //() -> -translateStick.getRawAxis(strafeAxis), 
-                //() -> -rotateStick.getRawAxis(rotationAxis), 
-               // () -> robotCentric.getAsBoolean()
+                () -> -driver.getRawAxis(j_translationAxis), 
+                () -> -driver.getRawAxis(j_strafeAxis), 
+                () -> -driver2.getRawAxis(j_rotationAxis), 
+                () -> robotCentric.getAsBoolean()
             )
         );
 
