@@ -156,9 +156,38 @@ public final class Constants {
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
 
+    public static final class Intake {
+        public static final int motorId = 53;
+
+        public static final int pdpChannel = 2; // update number later
+
+        public static final double stoppedRPMThreshold = .01;
+
+        public static final double coneIntakeSpeed = 8;
+        public static final double cubeIntakeSpeed = 4;
+
+        public static final double coneOuttakeSpeed = 4;
+        public static final double coneShootSpeed = 12;
+        public static final double cubeOuttakeSpeed = 7;
+
+        public static final int currentLimit = 30;
+
+        public enum EjectSpeed {
+            FAST(12),
+            NORMAL(7);
+
+            public final double speed;
+
+            EjectSpeed(double speed) {
+                this.speed = speed;
+            }
+        }
+    }
+
+
     public static final class Elevator {
-        public static final int motorLeftId = 41;
-        public static final int motorRightId = 42;
+        public static final int motorOneId = 41;
+        public static final int motorTwoId = 42;
 
         public static final double elevatorKP = 1.5;
         public static final double elevatorKI = .2;
@@ -169,4 +198,37 @@ public final class Constants {
         public static final int currentLimit = 30;
 
     }
+    
+    public enum Position {
+
+        HIGH(0, 0),
+        CONEHIGH(.067, 35),
+        CUBEHIGH(1.55, 35),
+        MID(0, 0),
+        CONEMID(5.81731, 35),
+        CUBEMID(1.427, 16.5),
+        LOW(.5236, .25),
+        STANDBY(1.1765, .25),
+        CUBEINTAKE(.1, 0.3),
+        STANDINGCONEINTAKE(5.106, 14.380),
+        TIPPEDCONEINTAKE(5.572, 1.333),
+        HUMANPLAYERINTAKE(.8763, 1.5);
+
+        private double wristPos;
+        private double elevatorPos;
+
+        private Position(double wrist, double elev) {
+            this.wristPos = wrist;
+            this.elevatorPos = elev;
+        }
+        
+        public double getWrist() {
+            return wristPos;
+        }
+
+        public double getElev() {
+            return elevatorPos;
+        }
+
+}
 }

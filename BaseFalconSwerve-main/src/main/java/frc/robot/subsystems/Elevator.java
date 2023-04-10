@@ -1,7 +1,17 @@
 package frc.robot.subsystems;
 
-//import com.revrobotics.CANSparkMax;
-//import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import frc.robot.Constants.Position;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -10,34 +20,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 //import frc.robot.Constants.Position;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-//import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
-//import com.ctre.phoenix.sensors.CANCoderConfiguration;
-import com.ctre.phoenix.sensors.WPI_CANCoder;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-//import frc.robot.Gains;
-import frc.robot.RobotMap;
 
 public class Elevator extends SubsystemBase {
 
-    // private final CANSparkMax elevatorMotorLeft; // making the left the lead
-    // motor
-    // private final CANSparkMax elevatorMotorRight; // the right motor is the
-    // follower
     private final TalonFX elevatorMotorOne;
     private final TalonFX elevatorMotorTwo;
+    final int kUnitsPerRevolution = 2048; /* this is constant for Talon FX */
 
     private static final double k_openLoopRampRate = 0.1;
     private static final int k_currentLimit = Constants.Elevator.currentLimit; // Current limit for intake falcon 500
+
+
 
     private PIDController pidController;
 
@@ -49,10 +42,11 @@ public class Elevator extends SubsystemBase {
      */
     public Elevator() {
         // initialize motors
-   
-        elevatorMotorOne = new TalonFX(RobotMap.ELEVATOR_MASTER_MOTOR);
-        elevatorMotorTwo = new TalonFX(RobotMap.ELEVATOR_SLAVE_MOTOR);
-        
+        // the right motor will spin clockwise and the left motor will go counter
+        // clockwise
+        elevatorMotorOne = new TalonFX(Constants.Elevator.motorOneId);
+        elevatorMotorTwo = new TalonFX(Constants.Elevator.motorTwoId);
+
         TalonFXConfiguration config = new TalonFXConfiguration();
         config.voltageCompSaturation = 12.0;
         config.openloopRamp = k_openLoopRampRate;
@@ -63,6 +57,8 @@ public class Elevator extends SubsystemBase {
         elevatorMotorOne.setNeutralMode(NeutralMode.Brake);
         elevatorMotorOne.setInverted(TalonFXInvertType.Clockwise);
         elevatorMotorOne.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        elevatorMotorOne.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+        //elevatorMotorOne.setSelectedSensorPosition(0); // zero the encoder
 
         elevatorMotorTwo.configAllSettings(config);
         elevatorMotorTwo.enableVoltageCompensation(true);
@@ -70,6 +66,16 @@ public class Elevator extends SubsystemBase {
         elevatorMotorTwo.setInverted(TalonFXInvertType.Clockwise);
         elevatorMotorTwo.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
+
+
+
+
+
+       // elevatorRightController = new CANCoder(Constants.Elevator.canConderRightId);
+
+        // The motors will follow each other
+        // The right motor will follow whatever the applied output on the
+        // left motor is so only need to adjust output for the left motor
 
         // initialize pidContoller
         pidController = new PIDController(Constants.Elevator.elevatorKP, Constants.Elevator.elevatorKI,
@@ -81,8 +87,8 @@ public class Elevator extends SubsystemBase {
     }
 
     public void resetEncoder() {
-        elevatorMotorOne.getEncoder().setPosition(0);
-        elevatorMotorTwo.getEncoder().setPosition(0);
+        elevatorMotorOne.setSelectedSensorPosition(0);// .getEncoder().setPosition(0);
+        elevatorMotorTwo.setSelectedSensorPosition(0); //getEncoder().setPosition(0);
     }
 
     public Command setPositionCMD(double position) {
@@ -90,9 +96,10 @@ public class Elevator extends SubsystemBase {
     }
 
     public void setPosition(double position) {
-        if (position > 35) {
+        if(position > 35) {
             position = 35;
-        } else if (position < 0.1) {
+        }
+        else if(position < 0.1) {
             position = 0.1;
         }
         currentPosition = position;
@@ -103,7 +110,8 @@ public class Elevator extends SubsystemBase {
     }
 
     public void move(double voltage) {
-        elevatorMotorLeft.setVoltage(voltage);
+        elevatorMotorOne.set(ControlMode.PercentOutput, voltage/12);
+        elevatorMotorTwo.set(ControlMode.PercentOutput, voltage/12);
     }
 
     public boolean reachedSetpoint(double distance) {
@@ -111,7 +119,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public double getEncoderPosition() {
-        return (elevatorMotorLeft.getEncoder().getPosition() + elevatorMotorRight.getEncoder().getPosition()) / 2;
+        return (elevatorMotorOne.getSelectedSensorPosition() + elevatorMotorTwo.getSelectedSensorPosition()) / 2;
     }
 
     public boolean atSetpoint() {
