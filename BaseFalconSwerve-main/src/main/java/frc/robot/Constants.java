@@ -198,6 +198,74 @@ public final class Constants {
         public static final int currentLimit = 30;
 
     }
+
+    public static final class Wrist{
+        public static final int wristMotorID = 0;
+        public static final int currentLimit = 30;
+        public static final double maxMotorVoltage = 12;
+        public static final int EncoderID = 0;
+       
+        public enum PIDFFmode {
+            WEIGHTED(
+                    Wrist.weightedP,
+                    Wrist.weightedI,
+                    Wrist.weightedD,
+                    Wrist.weightedS,
+                    Wrist.weightedV,
+                    Wrist.weightedA,
+                    Wrist.weightedG),
+            UNWEIGHTED(
+                    Wrist.unweightedP,
+                    Wrist.unweightedI,
+                    Wrist.unweightedD,
+                    Wrist.unweightedS,
+                    Wrist.unweightedV,
+                    Wrist.unweightedA,
+                    Wrist.unweightedG);
+
+            public final double kP;
+            public final double kI;
+            public final double kD;
+            public final double kS;
+            public final double kV;
+            public final double kA;
+            public final double kG;
+
+            private PIDFFmode(double kP, double kI, double kD, double kS, double kV, double kA, double kG) {
+                this.kP = kP;
+                this.kI = kI;
+                this.kD = kD;
+                this.kS = kS;
+                this.kV = kV;
+                this.kA = kA;
+                this.kG = kG;
+            }
+
+        }
+
+        public static double weightedP = 2.8;
+        public static double weightedI = 0.0;
+        public static double weightedD = 0.2;
+
+        public static double weightedS = 0.4361;
+        public static double weightedV = 0.79036;
+        public static double weightedA = 0.0;
+        public static double weightedG = 0.86416;
+
+        public static double unweightedP = 2.2;
+        public static double unweightedI = 0.0;
+        public static double unweightedD = 0.2;
+
+        public static double unweightedS = 0.11237;
+        public static double unweightedV = 0.56387;
+        public static double unweightedA = 0.041488;
+        public static double unweightedG = 0.76416;
+
+        public static final double motorGearRatio = 1 / 32.0;
+        public static final double absoluteEncoderOffset = 5.412927;
+
+        
+    }
     
     public enum Position {
 

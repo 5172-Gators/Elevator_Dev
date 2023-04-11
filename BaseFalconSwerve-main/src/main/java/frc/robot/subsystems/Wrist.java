@@ -1,28 +1,34 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.SparkMaxAbsoluteEncoder;
-import com.revrobotics.CANSparkMax.IdleMode;
+
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.Position;
-import frc.robot.Constants.Wrist.PIDFFmode;
+//import frc.robot.Constants.Wrist.PIDFFmode;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.revrobotics.AbsoluteEncoder;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+//import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+
+import com.ctre.phoenix.sensors.CANCoder;
 /**
  * The wrist subsystem will be used to set up the motors and encoders for the
  * wrist.
  */
 public class Wrist extends SubsystemBase {
-    private final CANSparkMax wristMotor;
+    private final TalonFX wristMotor;
 
     /**
      * Declares the relative and absolute encoders for the wrist. The absolute
@@ -31,41 +37,53 @@ public class Wrist extends SubsystemBase {
      * built into the
      * spark max motor.
      */
-    private final RelativeEncoder relativeEncoder;
-    private final AbsoluteEncoder absoluteEncoder;
+    //private final RelativeEncoder relativeEncoder;
+    private final CANCoder wristAbsoluteEncoder;
 
     private double currentPosition;
     private final PIDController pidController;
     private ArmFeedforward feedForward;
-
+    private static final double k_openLoopRampRate = 0.1;
+    private Encoder relativeEncoder;
+    private double relativeEncoderPos;
     /**
      * Intake
      */
     public Wrist() {
 
-        wristMotor = new CANSparkMax(Constants.Wrist.wristMotorId, MotorType.kBrushless);
-        wristMotor.setInverted(true);
-        wristMotor.setIdleMode(IdleMode.kBrake);
+        wristMotor = new TalonFX(Constants.Wrist.wristMotorID);//new CANSparkMax(Constants.Wrist.wristMotorId, MotorType.kBrushless);
+        wristAbsoluteEncoder = new CANCoder(Constants.Wrist.EncoderID);
 
-        absoluteEncoder = wristMotor.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle);
-        absoluteEncoder.setInverted(true);
+        TalonFXConfiguration config = new TalonFXConfiguration();
+        config.voltageCompSaturation = 12.0;
+        config.openloopRamp = k_openLoopRampRate;
+        config.supplyCurrLimit = new SupplyCurrentLimitConfiguration(true, Constants.Wrist.currentLimit, 0, 0);
+
+        
+        wristMotor.configAllSettings(config);
+        wristMotor.enableVoltageCompensation(true);
+        wristMotor.setNeutralMode(NeutralMode.Brake);
+        wristMotor.setInverted(TalonFXInvertType.Clockwise);
+        wristMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+
+        //absoluteEncoder = //wristMotor.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle);
+        //absoluteEncoder.setInverted(true);
 
         pidController = new PIDController(Constants.Wrist.unweightedP, Constants.Wrist.unweightedI,
                 Constants.Wrist.unweightedD);
         pidController.enableContinuousInput(0, Math.PI * 2);
         pidController.setTolerance(.25);
 
-        relativeEncoder = wristMotor.getEncoder();
-
-        absoluteEncoder.setPositionConversionFactor(2 * Math.PI);
-        absoluteEncoder.setZeroOffset(Constants.Wrist.absoluteEncoderOffset);
-        relativeEncoder.setPositionConversionFactor(Constants.Wrist.motorGearRatio * 2 * Math.PI);
+        relativeEncoderPos = wristMotor.getSelectedSensorPosition();
+        
+        wristAbsoluteEncoder.configMagnetOffset(Constants.Wrist.absoluteEncoderOffset);
+        //relativeEncoderPos.configFeedbackCoefficient.sensorCoefficient(Constants.Wrist.motorGearRatio * 2 * Math.PI);
 
         feedForward = new ArmFeedforward(Constants.Wrist.unweightedS, Constants.Wrist.unweightedG,
                 Constants.Wrist.unweightedV,
                 Constants.Wrist.unweightedA);
 
-        relativeEncoder.setPosition(absoluteEncoder.getPosition());
+        relativeEncoder.conf setPosition(wristAbsoluteEncoder.getPosition());
 
         setPosition(Position.STANDBY.getWrist());
 

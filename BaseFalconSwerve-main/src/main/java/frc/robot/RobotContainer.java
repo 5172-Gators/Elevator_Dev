@@ -19,9 +19,10 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    /* Controllers */
-    private final Joystick translateStick = new Joystick(0);
-    private final Joystick rotateStick = new Joystick(1);
+        /* Controllers */
+        private final static Joystick translateStick = new Joystick(0);
+        private final static Joystick rotateStick = new Joystick(1);
+        private final static Joystick operatorStick = new Joystick(2);
 
 
     /* Drive Controls */
@@ -29,21 +30,53 @@ public class RobotContainer {
     private final int j_translationAxis = Joystick.AxisType.kY.value;
     private final int j_strafeAxis = Joystick.AxisType.kX.value;
     private final int j_rotationAxis = Joystick.AxisType.kX.value;
-    //private final int strafeAxis =  Joystick.AxisType.kX.value;
-   // private final int translationAxis = XboxController.Axis.kLeftY.value;
-    //private final int strafeAxis = XboxController.Axis.kLeftX.value;
-    //private final int rotationAxis = XboxController.Axis.kRightY.value;
+
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(rotateStick,2);
     private final JoystickButton robotCentric = new JoystickButton(rotateStick,11);
 
-   // private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-   // private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+/*
+ *     private static final JoystickButton driveFastTrigger = new JoystickButton(translateStick, 1);
+        private static final JoystickButton driveSlowButton = new JoystickButton(translateStick, 2);
+        private static final JoystickButton robotCentric = new JoystickButton(translateStick, 3);
+
+        private static final JoystickButton gridLineUpButton = new JoystickButton(translateStick, 4);
+        // rtotateStick Buttons
+        private static final JoystickButton selectGamepieceTrigger = new JoystickButton(rotateStick, 1);
+        private static final JoystickButton resetGyroButton = new JoystickButton(rotateStick, 2);
+        private static final JoystickButton autoBalanceButton = new JoystickButton(rotateStick, 3);
+        private static final JoystickButton followPathButton = new JoystickButton(rotateStick, 4);
+
+        // Operator Controls 
+        private static final int elevatorAxis = Joystick.AxisType.kY.value;
+        private static final int wristAxis = Joystick.AxisType.kX.value;
+
+        private static final JoystickButton intakeTrigger = new JoystickButton(translateStick, 1);
+        private static final JoystickButton outTakeSlowButton = new JoystickButton(operatorStick, 2);
+        private static final JoystickButton outTakeFastButton = new JoystickButton(operatorStick, 3);
+        private static final JoystickButton toggleLEDButton = new JoystickButton(operatorStick, 4);
+        private static final JoystickButton pickHumanPlayerButton = new JoystickButton(operatorStick, 5);
+        private static final JoystickButton pickStandingConeButton = new JoystickButton(operatorStick, 6);
+        private static final JoystickButton pickTippedConeButton = new JoystickButton(operatorStick, 7);
+        private static final JoystickButton pickCubeButton = new JoystickButton(operatorStick, 8);
+        private static final JoystickButton stowIntakeButton = new JoystickButton(operatorStick, 9);
+        private static final JoystickButton placeHighButton = new JoystickButton(operatorStick, 10);
+        private static final JoystickButton placeMidButton = new JoystickButton(operatorStick,11);
+        private static final JoystickButton placeLowButton = new JoystickButton(operatorStick, 12);
+
+ */
+
+
+
+
+
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
-
+    private final Intake s_Intake = new Intake();
+    private final Elevator s_Elevator = new Elevator();
+    private final Wrist s_Wrist = new Wrist();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
