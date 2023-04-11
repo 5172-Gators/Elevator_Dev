@@ -77,6 +77,8 @@ public class RobotContainer {
     private final Intake s_Intake = new Intake();
     private final Elevator s_Elevator = new Elevator();
     private final Wrist s_Wrist = new Wrist();
+    private final Shoulder s_Shoulder = new Shoulder();
+    private final ElevatorTest s_ElevatorTest = new ElevatorTest();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -103,6 +105,8 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        robotCentric.onTrue( new InstantCommand( ()-> s_ElevatorTest.setPosition(5)));
+        robotCentric.onFalse(new InstantCommand( ()-> s_ElevatorTest.setPosition(0)));
     }
 
     /**
