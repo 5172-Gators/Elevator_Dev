@@ -77,7 +77,10 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final Intake s_Intake = new Intake();
+    private final Wrist s_Wrist = new Wrist();
     private final ElevatorTest s_ElevatorTest = new ElevatorTest();
+
+    private double elevatorDesiredPosition= 0;
     //private final Wrist s_Wrist = new Wrist();
     //private final Shoulder s_Shoulder = new Shoulder();
     //private final ElevatorTest s_ElevatorTest = new ElevatorTest();
@@ -93,10 +96,11 @@ public class RobotContainer {
                 () -> robotCentric.getAsBoolean()
             )
         );
+
         s_ElevatorTest.setDefaultCommand(
             new TeleopElevatorTest(
                 s_ElevatorTest, 
-              () -> -operatorStick.getY() * 65000
+              () -> -operatorStick.getY() * 1000
             )
         );
 
@@ -122,9 +126,12 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
         /* Operator Button */
-        pickHumanPlayerButton.onTrue(new InstantCommand(()-> s_ElevatorTest.setPosition(Constants.Position.HUMANPLAYERINTAKE.getElev())));
+        robotCentric.onTrue(new SetPositionTest(s_ElevatorTest));
+        placeHighButton.onTrue(new SetPositionHigh(s_ElevatorTest));
+        //placeLowButton.onTrue(new SetPositionLow(s_ElevatorTest));
 
-       // robotCentric.onTrue( new InstantCommand( ()-> s_ElevatorTest.setPosition(operatorStick.getY()*65000*-1)));
+        pickTippedConeButton.onTrue(new WristTeleop(s_Wrist));
+
         //robotCentric.onFalse(new InstantCommand( ()-> s_Elevator.setPositionCMD(0)));
     }
 

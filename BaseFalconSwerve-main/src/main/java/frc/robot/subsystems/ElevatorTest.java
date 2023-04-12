@@ -108,6 +108,16 @@ public class ElevatorTest extends SubsystemBase {
     m_goalPosition = goalPosition;
   }
 
+  public void joystickPosition(double joystickPosition)
+  {
+    m_goalPosition = m_goalPosition + joystickPosition;
+  }
+
+  public double ElevatorPosition()
+  {
+    return elevatorMotorOne.getSelectedSensorPosition();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

@@ -188,7 +188,7 @@ public final class Constants {
     public static final class Elevator {
         public static final int motorOneId = 41;
         public static final int motorTwoId = 42;
-        public static final int currentLimit = 5;
+        public static final int currentLimit = 10;
         public static final double maxMotorVoltage = .5;
         public static final Double maxExtension = -60000.0;
 
@@ -215,6 +215,7 @@ public final class Constants {
         public static final double maxMotorVoltage = 12;
         public static final int EncoderID = 16;
 
+        
         public enum PIDFFmode {
             WEIGHTED(
                     Wrist.weightedP,
@@ -270,6 +271,16 @@ public final class Constants {
         public static double unweightedV = 0.56387;
         public static double unweightedA = 0.041488;
         public static double unweightedG = 0.76416;
+        
+
+        public static final int kSlotIdx = 0;
+        public static final int kPIDLoopIdx = 0;
+        public static final int kTimeoutMs = 30;
+
+        public static final double wristKP = .05;
+        public static final double wristKI = 0.0;
+        public static final double wristKD = 6.0;
+
 
         public static final double motorGearRatio = 1 / 15.0;
         public static final double absoluteEncoderOffset = 5.412927;
