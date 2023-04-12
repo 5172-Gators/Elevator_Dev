@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -34,12 +36,12 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(rotateStick,2);
-    private final JoystickButton robotCentric = new JoystickButton(rotateStick,11);
+    private final JoystickButton robotCentric = new JoystickButton(operatorStick,1);
 
-/*
- *     private static final JoystickButton driveFastTrigger = new JoystickButton(translateStick, 1);
+
+        private static final JoystickButton driveFastTrigger = new JoystickButton(translateStick, 1);
         private static final JoystickButton driveSlowButton = new JoystickButton(translateStick, 2);
-        private static final JoystickButton robotCentric = new JoystickButton(translateStick, 3);
+        //private static final JoystickButton robotCentric = new JoystickButton(translateStick, 3);
 
         private static final JoystickButton gridLineUpButton = new JoystickButton(translateStick, 4);
         // rtotateStick Buttons
@@ -65,7 +67,7 @@ public class RobotContainer {
         private static final JoystickButton placeMidButton = new JoystickButton(operatorStick,11);
         private static final JoystickButton placeLowButton = new JoystickButton(operatorStick, 12);
 
- */
+ 
 
 
 
@@ -75,10 +77,10 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final Intake s_Intake = new Intake();
-    private final Elevator s_Elevator = new Elevator();
-    private final Wrist s_Wrist = new Wrist();
-    private final Shoulder s_Shoulder = new Shoulder();
     private final ElevatorTest s_ElevatorTest = new ElevatorTest();
+    //private final Wrist s_Wrist = new Wrist();
+    //private final Shoulder s_Shoulder = new Shoulder();
+    //private final ElevatorTest s_ElevatorTest = new ElevatorTest();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -91,6 +93,19 @@ public class RobotContainer {
                 () -> robotCentric.getAsBoolean()
             )
         );
+        s_ElevatorTest.setDefaultCommand(
+            new TeleopElevatorTest(
+                s_ElevatorTest, 
+              () -> -operatorStick.getY() * 65000
+            )
+        );
+
+    
+           
+
+       
+
+     
 
         // Configure the button bindings
         configureButtonBindings();
@@ -105,8 +120,12 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        robotCentric.onTrue( new InstantCommand( ()-> s_ElevatorTest.setPosition(5)));
-        robotCentric.onFalse(new InstantCommand( ()-> s_ElevatorTest.setPosition(0)));
+
+        /* Operator Button */
+        pickHumanPlayerButton.onTrue(new InstantCommand(()-> s_ElevatorTest.setPosition(Constants.Position.HUMANPLAYERINTAKE.getElev())));
+
+       // robotCentric.onTrue( new InstantCommand( ()-> s_ElevatorTest.setPosition(operatorStick.getY()*65000*-1)));
+        //robotCentric.onFalse(new InstantCommand( ()-> s_Elevator.setPositionCMD(0)));
     }
 
     /**

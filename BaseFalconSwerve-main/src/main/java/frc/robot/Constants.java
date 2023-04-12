@@ -13,10 +13,7 @@ import frc.lib.util.SwerveModuleConstants;
 public final class Constants {
     public static final double stickDeadband = 0.1;
 
-    public static final int wristMotorId = 0;
-    public static final int intakeMotorId = 53;
-    public static final int elevatorMotor1 = 41;
-    public static final int elecvatorMotor2 = 42;
+ 
 
     public static final class Swerve {
         public static final int pigeonID = 14;
@@ -191,22 +188,32 @@ public final class Constants {
     public static final class Elevator {
         public static final int motorOneId = 41;
         public static final int motorTwoId = 42;
+        public static final int currentLimit = 5;
+        public static final double maxMotorVoltage = .5;
+        public static final Double maxExtension = -60000.0;
 
-        public static final double elevatorKP = 1.5;
-        public static final double elevatorKI = .2;
-        public static final double elevatorKD = .05;
+        public static final int kSlotIdx = 0;
+        public static final int kPIDLoopIdx = 0;
+        public static final int kTimeoutMs = 30;
 
-        public static final double maxMotorVoltage = 5;
+        public static final double elevatorKP = .05;
+        public static final double elevatorKI = 0.0;
+        public static final double elevatorKD = 6.0;
 
-        public static final int currentLimit = 30;
+        public static boolean kSensorPhase = true;
+    	public static boolean kMotorInvert = true;
+
+        //static final Gains kGains = new Gains(0.05, 0.0000, 6.0, 0.0, 0, .5);
+
+
 
     }
 
     public static final class Wrist {
-        public static final int wristMotorID = 0;
+        public static final int wristMotorID = 22;
         public static final int currentLimit = 30;
         public static final double maxMotorVoltage = 12;
-        public static final int EncoderID = 0;
+        public static final int EncoderID = 16;
 
         public enum PIDFFmode {
             WEIGHTED(
@@ -278,11 +285,11 @@ public final class Constants {
         CONEMID(5.81731, 35, 0),
         CUBEMID(1.427, 16.5, 0),
         LOW(.5236, .25, 0),
-        STANDBY(1.1765, .25, 0),
+        STANDBY(1.1765, 100, 0),
         CUBEINTAKE(.1, 0.3, 0),
         STANDINGCONEINTAKE(5.106, 14.380, 0),
         TIPPEDCONEINTAKE(5.572, 1.333, 0),
-        HUMANPLAYERINTAKE(.8763, 1.5, 0);
+        HUMANPLAYERINTAKE(.8763, -40000, 0);
 
         private double wristPos;
         private double elevatorPos;
@@ -307,10 +314,10 @@ public final class Constants {
 
     }
     public static final class Shoulder{
-        public static final int ShoulderMotorID = 0;
+        public static final int ShoulderMotorID = 52;
         public static final int currentLimit = 30;
         public static final double maxMotorVoltage = 12;
-        public static final int EncoderID = 0;
+        public static final int EncoderID = 15;
        
         public enum PIDFFmode {
             WEIGHTED(

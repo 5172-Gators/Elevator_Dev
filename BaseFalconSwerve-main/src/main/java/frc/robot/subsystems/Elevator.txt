@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import frc.robot.Constants.Position;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -11,7 +9,6 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
-
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -30,14 +27,12 @@ public class Elevator extends SubsystemBase {
     private static final double k_openLoopRampRate = 0.1;
     private static final int k_currentLimit = Constants.Elevator.currentLimit; // Current limit for intake falcon 500
 
-
-
     private PIDController pidController;
 
     private double currentPosition;
 
     /**
-     * Initialize Elevator motor and the built in encoder. There are no cancoders on
+     * Initialize Elevator motor. There are no cancoders on
      * the elevator
      */
     public Elevator() {
@@ -55,52 +50,41 @@ public class Elevator extends SubsystemBase {
         elevatorMotorOne.configAllSettings(config);
         elevatorMotorOne.enableVoltageCompensation(true);
         elevatorMotorOne.setNeutralMode(NeutralMode.Brake);
-        elevatorMotorOne.setInverted(TalonFXInvertType.Clockwise);
+        elevatorMotorOne.setInverted(TalonFXInvertType.CounterClockwise);
         elevatorMotorOne.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
         elevatorMotorOne.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
-        //elevatorMotorOne.setSelectedSensorPosition(0); // zero the encoder
+        // elevatorMotorOne.setSelectedSensorPosition(0); // zero the encoder
 
         elevatorMotorTwo.configAllSettings(config);
         elevatorMotorTwo.enableVoltageCompensation(true);
         elevatorMotorTwo.setNeutralMode(NeutralMode.Brake);
-        elevatorMotorTwo.setInverted(TalonFXInvertType.Clockwise);
+        elevatorMotorTwo.setInverted(TalonFXInvertType.CounterClockwise);
         elevatorMotorTwo.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
-
-
-
-
-
-       // elevatorRightController = new CANCoder(Constants.Elevator.canConderRightId);
-
-        // The motors will follow each other
-        // The right motor will follow whatever the applied output on the
-        // left motor is so only need to adjust output for the left motor
-
         // initialize pidContoller
-        pidController = new PIDController(Constants.Elevator.elevatorKP, Constants.Elevator.elevatorKI,
+        pidController = new PIDController(Constants.Elevator.elevatorKP,
+                Constants.Elevator.elevatorKI,
                 Constants.Elevator.elevatorKD);
         pidController.setSetpoint(0);
-        pidController.setTolerance(.25);
-
-        setPosition(Position.STANDBY.getElev());
+        pidController.setTolerance(100);
+        resetEncoder();
+        //setPosition(Position.STANDBY.getElev());
     }
 
     public void resetEncoder() {
         elevatorMotorOne.setSelectedSensorPosition(0);// .getEncoder().setPosition(0);
-        elevatorMotorTwo.setSelectedSensorPosition(0); //getEncoder().setPosition(0);
+        elevatorMotorTwo.setSelectedSensorPosition(0); // getEncoder().setPosition(0);
     }
 
-    public Command setPositionCMD(double position) {
-        return run(() -> setPosition(position)).until(() -> atSetpoint());
-    }
+    //public Command setPositionCMD(double position) {
+     //   return run(() -> setPosition(position)).until(() -> atSetpoint());
+   // }
 
     public void setPosition(double position) {
-        if(position > 35) {
-            position = 35;
-        }
-        else if(position < 0.1) {
-            position = 0.1;
+        if (position > 65000) {
+            position = 65000;
+        } else if (position < 100) {
+            position = 100;
         }
         currentPosition = position;
     }
@@ -110,8 +94,8 @@ public class Elevator extends SubsystemBase {
     }
 
     public void move(double voltage) {
-        elevatorMotorOne.set(ControlMode.PercentOutput, voltage/12);
-        elevatorMotorTwo.set(ControlMode.PercentOutput, voltage/12);
+        elevatorMotorOne.set(ControlMode.PercentOutput, voltage);
+        elevatorMotorTwo.set(ControlMode.PercentOutput, voltage);
     }
 
     public boolean reachedSetpoint(double distance) {
@@ -123,6 +107,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public boolean atSetpoint() {
+
         return pidController.atSetpoint();
     }
 
