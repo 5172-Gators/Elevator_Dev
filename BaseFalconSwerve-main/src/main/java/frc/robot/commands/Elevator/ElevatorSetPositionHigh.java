@@ -2,21 +2,17 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
-
-import java.util.function.DoubleSupplier;
+package frc.robot.commands.Elevator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ElevatorTest;
-public class TeleopElevatorTest extends CommandBase {
+import frc.robot.subsystems.Elevator;
+public class ElevatorSetPositionHigh extends CommandBase {
   /** Creates a new TeleopElevatorTest. */
-  private ElevatorTest s_ElevatorTest;
-  private DoubleSupplier s_GoalPosition;
+  private Elevator s_ElevatorTest;
 
-  public TeleopElevatorTest(ElevatorTest s_ElevatorTest, DoubleSupplier GoalPosition) {
+  public ElevatorSetPositionHigh(Elevator s_ElevatorTest) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.s_ElevatorTest = s_ElevatorTest;
-    this.s_GoalPosition = GoalPosition;
 
     addRequirements(s_ElevatorTest);
   }
@@ -29,7 +25,7 @@ public class TeleopElevatorTest extends CommandBase {
   @Override
    public void execute() {
       
-      s_ElevatorTest.joystickPosition(s_GoalPosition.getAsDouble()); 
+      s_ElevatorTest.setPosition(55000); 
   }
   // Called once the command ends or is interrupted.
   @Override
@@ -38,7 +34,15 @@ public class TeleopElevatorTest extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    
+    if(s_ElevatorTest.ElevatorPosition() < 55000 + 5000  && s_ElevatorTest.ElevatorPosition() > 55000 - 5000)
+    {
+      return true;
+    } else
+    {
+      return false; 
+    }
+    
   }
 }
 

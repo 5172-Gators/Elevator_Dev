@@ -329,6 +329,9 @@ public final class Constants {
         public static final int currentLimit = 30;
         public static final double maxMotorVoltage = 12;
         public static final int EncoderID = 15;
+
+        public static final double upperLimit = 0; //need to find in motor ticks
+        public static final double lowerLimit = 0; //need to find in motor ticks
        
         public enum PIDFFmode {
             WEIGHTED(

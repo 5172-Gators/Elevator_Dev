@@ -84,13 +84,15 @@ public class Wrist extends SubsystemBase {
 
   }
 
-  public void setPosition(double goalPosition)
-  {
+  public void setPosition(double goalPosition){
     m_goalPosition = goalPosition;
   }
 
-  public double WristPosition()
-  {
+  public void joystickPosition(double joystickPosition){
+    m_goalPosition = m_goalPosition + joystickPosition;
+  }
+
+  public double WristPosition(){
     return wristMotor.getSelectedSensorPosition();
   }
 
@@ -99,8 +101,8 @@ public class Wrist extends SubsystemBase {
     // This method will be called once per scheduler run
     m_encoder = wristMotor.getSelectedSensorPosition();// * (1.0 / 360.0 * 2.0 * Math.PI * 1.5);
 
-    SmartDashboard.putNumber("Elevator Position", m_encoder);
-    SmartDashboard.putNumber("Elevator Goal Position", m_goalPosition);
+    SmartDashboard.putNumber("Wrist Position", m_encoder);
+    SmartDashboard.putNumber("Wrist Goal Position", m_goalPosition);
    // elevatorMotorOne.set(ControlMode.Position, m_controller.calculate(m_encoder));
     wristMotor.set(TalonFXControlMode.Position, m_goalPosition);
     
