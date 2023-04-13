@@ -13,8 +13,6 @@ import frc.lib.util.SwerveModuleConstants;
 public final class Constants {
     public static final double stickDeadband = 0.1;
 
- 
-
     public static final class Swerve {
         public static final int pigeonID = 14;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
@@ -188,10 +186,16 @@ public final class Constants {
     public static final class Elevator {
         public static final int motorOneId = 41;
         public static final int motorTwoId = 42;
+
+        public static boolean kSensorPhase = true;
+        public static boolean kMotorInvert = true;
+
         public static final int currentLimit = 10;
         public static final double maxMotorVoltage = .5;
         public static final Double maxExtension = -60000.0;
+        public static final Double minExtension = 0.0;
 
+        // PID constants:
         public static final int kSlotIdx = 0;
         public static final int kPIDLoopIdx = 0;
         public static final int kTimeoutMs = 30;
@@ -199,13 +203,9 @@ public final class Constants {
         public static final double elevatorKP = .05;
         public static final double elevatorKI = 0.0;
         public static final double elevatorKD = 6.0;
+        public static final double kmaxAllowableError = 100;
 
-        public static boolean kSensorPhase = true;
-    	public static boolean kMotorInvert = true;
-
-        //static final Gains kGains = new Gains(0.05, 0.0000, 6.0, 0.0, 0, .5);
-
-
+        // static final Gains kGains = new Gains(0.05, 0.0000, 6.0, 0.0, 0, .5);
 
     }
 
@@ -278,7 +278,6 @@ public final class Constants {
         public static double unweightedV = 0.56387;
         public static double unweightedA = 0.041488;
         public static double unweightedG = 0.76416;
-        
 
         public static final int kSlotIdx = 0;
         public static final int kPIDLoopIdx = 0;
@@ -288,7 +287,6 @@ public final class Constants {
         public static final double wristKI = 0.0;
         public static final double wristKD = 6.0;
 
-
         public static final double motorGearRatio = 1 / 15.0;
         public static final double absoluteEncoderOffset = 5.412927;
 
@@ -296,18 +294,22 @@ public final class Constants {
 
     public enum Position {
 
-        HIGH(0, 0, 0 ),
+        HIGH(0, 0, 0),
         CONEHIGH(.067, 35, 0),
+        CONEHIGHUP(1.55, 34.5, 0),
         CUBEHIGH(1.55, 35, 0),
         MID(0, 0, 0),
         CONEMID(5.81731, 35, 0),
         CUBEMID(1.427, 16.5, 0),
         LOW(.5236, .25, 0),
+        CONELOW(5.9, 1.5, 0),
+        CUBELOW(1.425, .25, 0),
         STANDBY(1.1765, 100, 0),
         CUBEINTAKE(.1, 0.3, 0),
         STANDINGCONEINTAKE(5.106, 14.380, 0),
         TIPPEDCONEINTAKE(5.572, 1.333, 0),
-        HUMANPLAYERINTAKE(.8763, -40000, 0);
+        HUMANPLAYERINTAKE(.8763, -40000, 0),
+        DOUBSUBSTATIONINTAKE(6.0076, 33.178, 0);
 
         private double wristPos;
         private double elevatorPos;
@@ -326,25 +328,42 @@ public final class Constants {
         public double getElev() {
             return elevatorPos;
         }
-        public double getShoulder (){
+
+        public double getShoulder() {
             return shoulderPos;
         }
 
     }
-    public static final class Shoulder{
+
+    public enum GamePiece {
+        CUBE(1),
+        CONE(-1);
+
+        private double direction;
+
+        private GamePiece(double value) {
+            direction = value;
+        }
+
+        public double getDirection() {
+            return direction;
+        }
+    }
+
+    public static final class Shoulder {
         public static final int ShoulderMotorID = 52;
         public static final int currentLimit = 30;
         public static final double maxMotorVoltage = 12;
         public static final int EncoderID = 15;
 
         /* limits in motor ticks (abs value) */
-        public static final double upperLimit = 676.0; 
-        public static final double lowerLimit = 1665.0; 
+        public static final double upperLimit = 676.0;
+        public static final double lowerLimit = 1665.0;
 
         /* CANCoder limits */
         public static final double CANCoderUpperLimit = 285.117;
         public static final double CANCoderLowerLimit = 311.660;
-       
+
         public enum PIDFFmode {
             WEIGHTED(
                     Wrist.weightedP,
@@ -404,7 +423,6 @@ public final class Constants {
         public static final double motorGearRatio = 1 / 15.0;
         public static final double absoluteEncoderOffset = 5.412927;
 
-        
     }
 
 }

@@ -35,7 +35,7 @@ public class ElevatorSetPositionHigh extends CommandBase {
   @Override
   public boolean isFinished() {
     
-    if(s_ElevatorTest.ElevatorPosition() < 55000 + 5000  && s_ElevatorTest.ElevatorPosition() > 55000 - 5000)
+    if(s_ElevatorTest.getElevatorPosition() < 55000 + 5000  && s_ElevatorTest.getElevatorPosition() > 55000 - 5000)
     {
       return true;
     } else
