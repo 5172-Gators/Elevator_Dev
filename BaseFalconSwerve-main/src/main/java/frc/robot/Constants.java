@@ -215,7 +215,14 @@ public final class Constants {
         public static final double maxMotorVoltage = 12;
         public static final int EncoderID = 16;
 
-        
+        /* limits in motor ticks */
+        public static final double lowerLimit = 387;
+        public static final double upperLimit = 448;
+
+        /* CANCoder limits */
+        public static final double CANCoderLowerLimit = 74.268;
+        public static final double CANCoderUpperLimit = 282.393;
+
         public enum PIDFFmode {
             WEIGHTED(
                     Wrist.weightedP,
@@ -330,8 +337,13 @@ public final class Constants {
         public static final double maxMotorVoltage = 12;
         public static final int EncoderID = 15;
 
-        public static final double upperLimit = 0; //need to find in motor ticks
-        public static final double lowerLimit = 0; //need to find in motor ticks
+        /* limits in motor ticks (abs value) */
+        public static final double upperLimit = 676.0; 
+        public static final double lowerLimit = 1665.0; 
+
+        /* CANCoder limits */
+        public static final double CANCoderUpperLimit = 285.117;
+        public static final double CANCoderLowerLimit = 311.660;
        
         public enum PIDFFmode {
             WEIGHTED(

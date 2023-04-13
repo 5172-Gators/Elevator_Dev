@@ -161,6 +161,11 @@ public class Shoulder extends SubsystemBase {
         return currentPosition;
     }
 
+    public double ShoulderPosition() {
+        return ShoulderMotor.getSelectedSensorPosition();
+
+    }
+
     public boolean atSetpoint() {
         return pidController.atSetpoint();
     }

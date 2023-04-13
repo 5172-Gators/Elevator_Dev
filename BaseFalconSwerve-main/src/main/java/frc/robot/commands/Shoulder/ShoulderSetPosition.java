@@ -6,15 +6,17 @@ package frc.robot.commands.Shoulder;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Shoulder;
 public class ShoulderSetPosition extends CommandBase {
   /** Creates a new TeleopElevatorTest. */
-  private Elevator s_ElevatorTest;
+  //private Elevator s_ElevatorTest;
+  private Shoulder s_Shoulder;
 
-  public ShoulderSetPosition(Elevator s_ElevatorTest) {
+  public ShoulderSetPosition(Shoulder s_Shoulder) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.s_ElevatorTest = s_ElevatorTest;
+    this.s_Shoulder = s_Shoulder;
 
-    addRequirements(s_ElevatorTest);
+    addRequirements(s_Shoulder);
   }
 
   // Called when the command is initially scheduled.
@@ -25,7 +27,7 @@ public class ShoulderSetPosition extends CommandBase {
   @Override
    public void execute() {
       
-      s_ElevatorTest.setPosition(30000); 
+      s_Shoulder.setPosition(-889); 
   }
   // Called once the command ends or is interrupted.
   @Override
@@ -35,7 +37,7 @@ public class ShoulderSetPosition extends CommandBase {
   @Override
   public boolean isFinished() {
     
-    if(s_ElevatorTest.ElevatorPosition() < 30000 + 5000  && s_ElevatorTest.ElevatorPosition() > 30000 - 5000)
+    if(s_Shoulder.ShoulderPosition() < 889 + 100  && s_Shoulder.ShoulderPosition() > 889 - 100)
     {
       return true;
     } else

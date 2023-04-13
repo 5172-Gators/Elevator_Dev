@@ -10,13 +10,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
+/* Autos */
 import frc.robot.autos.*;
-import frc.robot.commands.*;
+
+/* Commands */
 import frc.robot.commands.Drive.TeleopSwerve;
 import frc.robot.commands.Elevator.ElevatorSetPosition;
 import frc.robot.commands.Elevator.ElevatorSetPositionHigh;
 import frc.robot.commands.Elevator.TeleopElevator;
 import frc.robot.commands.Wrist.WristSetPosition;
+import frc.robot.commands.Shoulder.ShoulderSetPosition;
+
+/* Subsystems */
 import frc.robot.subsystems.*;
 
 /**
@@ -84,6 +89,7 @@ public class RobotContainer {
     private final Intake s_Intake = new Intake();
     private final Wrist s_Wrist = new Wrist();
     private final Elevator s_ElevatorTest = new Elevator();
+    private final Shoulder s_Shoulder = new Shoulder();
 
     private double elevatorDesiredPosition= 0;
     //private final Wrist s_Wrist = new Wrist();
@@ -105,10 +111,9 @@ public class RobotContainer {
         s_ElevatorTest.setDefaultCommand(
             new TeleopElevator(
                 s_ElevatorTest, 
-              () -> -operatorStick.getY() * 1000
+             () -> -operatorStick.getY() * 1000
             )
         );
-
     
            
 
@@ -131,11 +136,13 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
         /* Operator Button */
-        robotCentric.onTrue(new ElevatorSetPosition(s_ElevatorTest));
-        placeHighButton.onTrue(new ElevatorSetPositionHigh(s_ElevatorTest));
+        //robotCentric.onTrue(new ElevatorSetPosition(s_ElevatorTest));
+        //placeHighButton.onTrue(new ElevatorSetPositionHigh(s_ElevatorTest));
         //placeLowButton.onTrue(new SetPositionLow(s_ElevatorTest));
 
         pickTippedConeButton.onTrue(new WristSetPosition(s_Wrist));
+
+        outTakeFastButton.onTrue(new ShoulderSetPosition(s_Shoulder));
 
         //robotCentric.onFalse(new InstantCommand( ()-> s_Elevator.setPositionCMD(0)));
     }
