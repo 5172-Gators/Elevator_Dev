@@ -2,23 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
-
-import java.util.function.DoubleSupplier;
+package frc.robot.commands.Shoulder;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Wrist;
-import frc.robot.subsystems.ElevatorTest;
-public class WristTeleop extends CommandBase {
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Shoulder;
+public class ShoulderSetPosition extends CommandBase {
   /** Creates a new TeleopElevatorTest. */
-  private Wrist s_Wrist;
+  //private Elevator s_ElevatorTest;
+  private Shoulder s_Shoulder;
 
-  public WristTeleop(Wrist s_ElevatorTest) {
+  public ShoulderSetPosition(Shoulder s_Shoulder) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.s_Wrist = s_ElevatorTest;
+    this.s_Shoulder = s_Shoulder;
 
-
-    addRequirements(s_ElevatorTest);
+    addRequirements(s_Shoulder);
   }
 
   // Called when the command is initially scheduled.
@@ -29,7 +27,7 @@ public class WristTeleop extends CommandBase {
   @Override
    public void execute() {
       
-      s_Wrist.setPosition(2000); 
+      s_Shoulder.setPosition(-889); 
   }
   // Called once the command ends or is interrupted.
   @Override
@@ -38,9 +36,14 @@ public class WristTeleop extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    
+    if(s_Shoulder.ShoulderPosition() < 889 + 100  && s_Shoulder.ShoulderPosition() > 889 - 100)
+    {
+      return true;
+    } else
+    {
+      return false; 
+    }
+    
   }
 }
-
-
-
