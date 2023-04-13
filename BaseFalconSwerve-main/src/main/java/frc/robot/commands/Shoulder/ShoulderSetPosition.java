@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Shoulder;
 public class ShoulderSetPosition extends CommandBase {
-  /** Creates a new TeleopElevatorTest. */
-  //private Elevator s_ElevatorTest;
+  /* Creates a new shoulder */
+  
   private Shoulder s_Shoulder;
 
   public ShoulderSetPosition(Shoulder s_Shoulder) {
@@ -27,7 +27,7 @@ public class ShoulderSetPosition extends CommandBase {
   @Override
    public void execute() {
       
-      s_Shoulder.setPosition(-889); 
+      s_Shoulder.setPosition(10); 
   }
   // Called once the command ends or is interrupted.
   @Override
@@ -37,10 +37,11 @@ public class ShoulderSetPosition extends CommandBase {
   @Override
   public boolean isFinished() {
     
-    if(s_Shoulder.ShoulderPosition() < 889 + 100  && s_Shoulder.ShoulderPosition() > 889 - 100)
+    if(s_Shoulder.ShoulderPosition() == 10)//< 300 + 100  && s_Shoulder.ShoulderPosition() > 300 - 100)
     {
       return true;
-    } else
+    } 
+    else
     {
       return false; 
     }

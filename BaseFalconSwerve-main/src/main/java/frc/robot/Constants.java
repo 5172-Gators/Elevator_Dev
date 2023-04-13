@@ -338,12 +338,12 @@ public final class Constants {
         public static final int EncoderID = 15;
 
         /* limits in motor ticks (abs value) */
-        public static final double upperLimit = 676.0; 
-        public static final double lowerLimit = 1665.0; 
+        public static final double upperLimit = 0.0; 
+        public static final double lowerLimit = -2938.0; 
 
         /* CANCoder limits */
         public static final double CANCoderUpperLimit = 285.117;
-        public static final double CANCoderLowerLimit = 311.660;
+        public static final double CANCoderLowerLimit = 310.0;
        
         public enum PIDFFmode {
             WEIGHTED(
@@ -381,25 +381,37 @@ public final class Constants {
                 this.kG = kG;
             }
 
+        
+
         }
 
-        public static double weightedP = 2.8;
-        public static double weightedI = 0.0;
-        public static double weightedD = 0.2;
+        // public static double weightedP = 2.0;
+        // public static double weightedI = 0.0;
+        // public static double weightedD = 0.0;
 
-        public static double weightedS = 0.4361;
-        public static double weightedV = 0.79036;
-        public static double weightedA = 0.0;
-        public static double weightedG = 0.86416;
+        // public static double weightedS = 0.4361;
+        // public static double weightedV = 0.79036;
+        // public static double weightedA = 0.0;
+        // public static double weightedG = 0.86416;
 
-        public static double unweightedP = 2.2;
-        public static double unweightedI = 0.0;
-        public static double unweightedD = 0.2;
+        // public static double unweightedP = 0.0;
+        // public static double unweightedI = 0.0;
+        // public static double unweightedD = 0.0;
 
-        public static double unweightedS = 0.11237;
-        public static double unweightedV = 0.56387;
-        public static double unweightedA = 0.041488;
-        public static double unweightedG = 0.76416;
+        // public static double unweightedS = 0.11237;
+        // public static double unweightedV = 0.56387;
+        // public static double unweightedA = 0.041488;
+        // public static double unweightedG = 0.76416;
+
+        public static final int kSlotIdx = 0;
+        public static final int kPIDLoopIdx = 0;
+        public static final int kTimeoutMs = 30;
+
+        public static final double elevatorKP = .05;
+        public static final double elevatorKI = 0.0;
+        public static final double elevatorKD = 0.0;
+
+        public static boolean kSensorPhase = true;
 
         public static final double motorGearRatio = 1 / 15.0;
         public static final double absoluteEncoderOffset = 5.412927;
