@@ -8,17 +8,17 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Wrist;
-
-public class WristSetPosition extends CommandBase {
+public class TeleopWrist extends CommandBase {
   /** Creates a new TeleopElevatorTest. */
   private Wrist s_Wrist;
+  private DoubleSupplier s_GoalPosition;
 
-  public WristSetPosition(Wrist s_ElevatorTest) {
+  public TeleopWrist(Wrist s_Wrist, DoubleSupplier GoalPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.s_Wrist = s_ElevatorTest;
+    this.s_Wrist = s_Wrist;
+    this.s_GoalPosition = GoalPosition;
 
-
-    addRequirements(s_ElevatorTest);
+    addRequirements(s_Wrist);
   }
 
   // Called when the command is initially scheduled.
@@ -28,8 +28,7 @@ public class WristSetPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
    public void execute() {
-      
-      s_Wrist.setPosition(2000); 
+      s_Wrist.joystickPosition(s_GoalPosition.getAsDouble()); 
   }
   // Called once the command ends or is interrupted.
   @Override
@@ -41,6 +40,3 @@ public class WristSetPosition extends CommandBase {
     return true;
   }
 }
-
-
-

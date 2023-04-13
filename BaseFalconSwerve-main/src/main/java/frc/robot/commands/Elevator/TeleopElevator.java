@@ -2,21 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Wrist;
+package frc.robot.commands.Elevator;
 
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Wrist;
-
-public class WristSetPosition extends CommandBase {
+import frc.robot.subsystems.Elevator;
+public class TeleopElevator extends CommandBase {
   /** Creates a new TeleopElevatorTest. */
-  private Wrist s_Wrist;
+  private Elevator s_ElevatorTest;
+  private DoubleSupplier s_GoalPosition;
 
-  public WristSetPosition(Wrist s_ElevatorTest) {
+  public TeleopElevator(Elevator s_ElevatorTest, DoubleSupplier GoalPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.s_Wrist = s_ElevatorTest;
-
+    this.s_ElevatorTest = s_ElevatorTest;
+    this.s_GoalPosition = GoalPosition;
 
     addRequirements(s_ElevatorTest);
   }
@@ -29,7 +29,7 @@ public class WristSetPosition extends CommandBase {
   @Override
    public void execute() {
       
-      s_Wrist.setPosition(2000); 
+      s_ElevatorTest.joystickPosition(s_GoalPosition.getAsDouble()); 
   }
   // Called once the command ends or is interrupted.
   @Override

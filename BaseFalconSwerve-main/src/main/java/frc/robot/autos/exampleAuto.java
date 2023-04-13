@@ -1,8 +1,8 @@
 package frc.robot.autos;
 
 import frc.robot.Constants;
-import frc.robot.commands.SetPositionHigh;
-import frc.robot.subsystems.ElevatorTest;
+import frc.robot.commands.Elevator.ElevatorSetPositionHigh;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Swerve;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class exampleAuto extends SequentialCommandGroup {
-    private final ElevatorTest s_Elevator = new ElevatorTest();
+    private final Elevator s_Elevator = new Elevator();
     public exampleAuto(Swerve s_Swerve){
         TrajectoryConfig config =
             new TrajectoryConfig(
