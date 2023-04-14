@@ -46,5 +46,5 @@ public class ShoulderSetPosition extends CommandBase {
       return false; 
     }
     
-  }
+}
 }

@@ -9,16 +9,16 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Wrist;
 
-public class WristSetPosition extends CommandBase {
+public class setPosition extends CommandBase {
   /** Creates a new TeleopElevatorTest. */
   private Wrist s_Wrist;
 
-  public WristSetPosition(Wrist s_ElevatorTest) {
+  public WristSetPosition(Wrist s_Wrist) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.s_Wrist = s_ElevatorTest;
+    this.s_Wrist = s_Wrist;
 
 
-    addRequirements(s_ElevatorTest);
+    addRequirements(s_Wrist);
   }
 
   // Called when the command is initially scheduled.

@@ -284,9 +284,9 @@ public final class Constants {
         public static final int kPIDLoopIdx = 0;
         public static final int kTimeoutMs = 30;
 
-        public static final double wristKP = .05;
+        public static final double wristKP = 5.0;
         public static final double wristKI = 0.0;
-        public static final double wristKD = 6.0;
+        public static final double wristKD = 0.0;
 
 
         public static final double motorGearRatio = 1 / 15.0;
@@ -333,8 +333,8 @@ public final class Constants {
     }
     public static final class Shoulder{
         public static final int ShoulderMotorID = 52;
-        public static final int currentLimit = 30;
-        public static final double maxMotorVoltage = 12;
+        // public static final int currentLimit = 20;
+        // public static final double maxMotorVoltage = 12;
         public static final int EncoderID = 15;
 
         /* limits in motor ticks (abs value) */
@@ -402,16 +402,19 @@ public final class Constants {
         // public static double unweightedV = 0.56387;
         // public static double unweightedA = 0.041488;
         // public static double unweightedG = 0.76416;
-
+        public static final int currentLimit = 30;
+        public static final double maxMotorVoltage = 12;
         public static final int kSlotIdx = 0;
         public static final int kPIDLoopIdx = 0;
         public static final int kTimeoutMs = 30;
 
-        public static final double elevatorKP = .05;
-        public static final double elevatorKI = 0.0;
-        public static final double elevatorKD = 0.0;
+        public static final double shoulderKP = 3.5;
+        public static final double shoulderKI = 0.1;
+        public static final double shoulderKD = 0.0;
+        public static final double shoulderkF = .1;
 
         public static boolean kSensorPhase = true;
+        public static double kAllowableError=100;
 
         public static final double motorGearRatio = 1 / 15.0;
         public static final double absoluteEncoderOffset = 5.412927;

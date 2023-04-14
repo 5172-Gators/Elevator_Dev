@@ -38,7 +38,7 @@ public class Shoulder extends SubsystemBase {
   // final int kUnitsPerRevolution = 2048; /* this is constant for Talon FX */
 
   private static final double k_openLoopRampRate = 0.1;
-  private static final int k_currentLimit = Constants.Elevator.currentLimit; // Current limit for intake falcon 500
+  private static final int k_currentLimit = Constants.Shoulder.currentLimit; // Current limit for intake falcon 500
 
   // private final TrapezoidProfile.Constraints m_constraints = new
   // TrapezoidProfile.Constraints(1.75, 0.75);
@@ -61,7 +61,7 @@ public class Shoulder extends SubsystemBase {
     ShoulderMotorOne.configAllSettings(config);
     ShoulderMotorOne.enableVoltageCompensation(true);
     ShoulderMotorOne.setNeutralMode(NeutralMode.Brake);
-    ShoulderMotorOne.setInverted(TalonFXInvertType.CounterClockwise);
+    ShoulderMotorOne.setInverted(TalonFXInvertType.Clockwise);
     ShoulderMotorOne.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     ShoulderMotorOne.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
 
@@ -74,29 +74,33 @@ public class Shoulder extends SubsystemBase {
         ShoulderMotorOne.setSensorPhase(Constants.Shoulder.kSensorPhase);
     
 
-    ShoulderMotorOne.configAllowableClosedloopError(0, Constants.Shoulder.kPIDLoopIdx, Constants.Shoulder.kTimeoutMs);
+    ShoulderMotorOne.configAllowableClosedloopError(0, Constants.Shoulder.kAllowableError, Constants.Shoulder.kTimeoutMs);
        /* Config Position Closed Loop gains in slot0, tsypically kF stays zero. */
     // ShoulderMotorOne.config_kF(Constants.Elevator.kPIDLoopIdx,
     // Constants.Elevator. kGains.kF, Constants.Elevator.kTimeoutMs);
-    ShoulderMotorOne.config_kP(Constants.Elevator.kPIDLoopIdx, Constants.Elevator.elevatorKP,
-        Constants.Elevator.kTimeoutMs);
-    ShoulderMotorOne.config_kI(Constants.Elevator.kPIDLoopIdx, Constants.Elevator.elevatorKI,
-        Constants.Elevator.kTimeoutMs);
-    ShoulderMotorOne.config_kD(Constants.Elevator.kPIDLoopIdx, Constants.Elevator.elevatorKD,
-        Constants.Elevator.kTimeoutMs);
+    ShoulderMotorOne.config_kP(Constants.Shoulder.kPIDLoopIdx, Constants.Shoulder.shoulderKP,
+        Constants.Shoulder.kTimeoutMs);
+    ShoulderMotorOne.config_kI(Constants.Shoulder.kPIDLoopIdx, Constants.Shoulder.shoulderKI,
+        Constants.Shoulder.kTimeoutMs);
+    ShoulderMotorOne.config_kD(Constants.Shoulder.kPIDLoopIdx, Constants.Shoulder.shoulderKD,
+        Constants.Shoulder.kTimeoutMs);
+
+    //ShoulderMotorOne.config_kF(Constants.Shoulder.shoulderkF, 20);
 
     ShoulderMotorOne.setSelectedSensorPosition(0);
 
-    m_encoder = ShoulderMotorOne.getSelectedSensorPosition(); // * 1.0 / 360.0 * 2.0 * Math.PI * 1.5;
+    //m_encoder = ShoulderMotorOne.getSelectedSensorPosition(); // * 1.0 / 360.0 * 2.0 * Math.PI * 1.5;
 
   }
 
   public void setPosition(double goalPosition) {
-    //if (goalPosition > Constants.Shoulder.lowerLimit) {
-    //  goalPosition = Constants.Shoulder.lowerLimit;
-   // }
+    if (goalPosition > Constants.Shoulder.lowerLimit) {
+     goalPosition = Constants.Shoulder.lowerLimit;
+   }
+
 
     m_goalPosition = goalPosition;
+
   }
 
   public void joystickPosition(double joystickPosition) {
@@ -114,6 +118,7 @@ public class Shoulder extends SubsystemBase {
 
     SmartDashboard.putNumber("Shoulder Position", m_encoder);
     SmartDashboard.putNumber("Shoulder Goal Position", m_goalPosition);
+    SmartDashboard.putNumber("motor Output", ShoulderMotorOne.getMotorOutputPercent());
     // ShoulderMotorOne.set(ControlMode.Position,
     // m_controller.calculate(m_encoder));
     ShoulderMotorOne.set(TalonFXControlMode.Position, m_goalPosition);

@@ -29,7 +29,7 @@ public class WristSetPosition extends CommandBase {
   @Override
    public void execute() {
       
-      s_Wrist.setPosition(2000); 
+      s_Wrist.setPosition(-4); 
   }
   // Called once the command ends or is interrupted.
   @Override

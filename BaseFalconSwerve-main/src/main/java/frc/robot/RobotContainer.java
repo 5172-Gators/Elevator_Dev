@@ -125,15 +125,14 @@ public class RobotContainer {
 
         /* Operator Button */
         // robotCentric.onTrue(new ElevatorSetPosition(s_ElevatorTest));
-        // placeHighButton.onTrue(new ElevatorSetPositionHigh(s_ElevatorTest));
+       // placeHighButton.onTrue(new ElevatorSetPositionHigh(s_Elevator));
+      // placeHighButton.onTrue(new ElevatorSetPositionHigh(s_Elevator));
         // placeLowButton.onTrue(new SetPositionLow(s_ElevatorTest));
 
-        pickTippedConeButton.onTrue(new WristSetPosition(s_Wrist));
-       // outTakeFastButton.onTrue(new InstantCommand(() -> s_Shoulder.setPosition(10)));
 
-      outTakeFastButton.onTrue(new ShoulderSetPosition(s_Shoulder));
-
-        // robotCentric.onFalse(new InstantCommand( ()-> s_Elevator.setPositionCMD(0)));
+        //outTakeFastButton.onTrue( new InstantCommand(()-> s_Shoulder.setPosition(-3500.0)));
+        intakeTrigger.onTrue(new InstantCommand(()-> s_Wrist.setPosition(0)));
+        //pickTippedConeButton.onTrue(new WristSetPosition(s_Wrist));
     }
 
     /**

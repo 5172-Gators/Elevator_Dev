@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Elevator;
 public class ElevatorSetPositionHigh extends CommandBase {
   /** Creates a new TeleopElevatorTest. */
-  private Elevator s_ElevatorTest;
+  private Elevator s_Elevator;
 
-  public ElevatorSetPositionHigh(Elevator s_ElevatorTest) {
+  public ElevatorSetPositionHigh(Elevator s_Elevator) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.s_ElevatorTest = s_ElevatorTest;
+    this.s_Elevator = s_Elevator;
 
-    addRequirements(s_ElevatorTest);
+    addRequirements(s_Elevator);
   }
 
   // Called when the command is initially scheduled.
@@ -25,7 +25,7 @@ public class ElevatorSetPositionHigh extends CommandBase {
   @Override
    public void execute() {
       
-      s_ElevatorTest.setPosition(55000); 
+      s_Elevator.setPosition(55000); 
   }
   // Called once the command ends or is interrupted.
   @Override
@@ -35,7 +35,7 @@ public class ElevatorSetPositionHigh extends CommandBase {
   @Override
   public boolean isFinished() {
     
-    if(s_ElevatorTest.ElevatorPosition() < 55000 + 5000  && s_ElevatorTest.ElevatorPosition() > 55000 - 5000)
+    if(s_Elevator.ElevatorPosition() < 55000 + 5000  && s_Elevator.ElevatorPosition() > 55000 - 5000)
     {
       return true;
     } else
