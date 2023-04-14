@@ -67,7 +67,7 @@ public class Intake extends SubsystemBase {
      */
 
     public void setMotor(double speed) {
-        m_intakeMotor.set(TalonFXControlMode.PercentOutput, 12/speed*k_intakePercentage); // setVoltage(speed);
+        m_intakeMotor.set(TalonFXControlMode.PercentOutput, k_intakePercentage); // setVoltage(speed);
     }
 
     public double getPDMCurrent() {
@@ -88,6 +88,8 @@ public class Intake extends SubsystemBase {
         // SmartDashboard.putNumber("Gamepiece", getGamePiece().getDirection());
 
     }
+
+
 
     public void resetIntakeEncoder() {
         m_intakeMotor.setSelectedSensorPosition(0);
