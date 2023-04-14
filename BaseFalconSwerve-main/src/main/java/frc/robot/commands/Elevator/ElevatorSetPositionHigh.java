@@ -5,12 +5,12 @@
 package frc.robot.commands.Elevator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.ElevatorSub;
 public class ElevatorSetPositionHigh extends CommandBase {
   /** Creates a new TeleopElevatorTest. */
-  private Elevator s_Elevator;
+  private ElevatorSub s_Elevator;
 
-  public ElevatorSetPositionHigh(Elevator s_Elevator) {
+  public ElevatorSetPositionHigh(ElevatorSub s_Elevator) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.s_Elevator = s_Elevator;
 

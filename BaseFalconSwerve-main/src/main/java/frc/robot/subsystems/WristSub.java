@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Wrist extends SubsystemBase {
+public class WristSub extends SubsystemBase {
   /** Creates a new ElevatorTest. */
   private static double kDt = 0.02;
   private final TalonFX wristMotor;
@@ -43,7 +43,7 @@ public class Wrist extends SubsystemBase {
   private double m_encoder = 0;
   private double m_goalPosition;
 
-  public Wrist() {
+  public WristSub() {
 
     // initialize motors
     // the right motor will spin clockwise and the left motor will go counter
@@ -108,4 +108,8 @@ public class Wrist extends SubsystemBase {
     
 
   }
+
+public boolean atSetpoint() {
+    return false;
+}
 }

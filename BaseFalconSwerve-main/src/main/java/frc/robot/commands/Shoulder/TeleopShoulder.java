@@ -7,18 +7,19 @@ package frc.robot.commands.Shoulder;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Elevator;
-public class TeleopElevator extends CommandBase {
+import frc.robot.subsystems.ShoulderSub;
+
+public class TeleopShoulder extends CommandBase {
   /** Creates a new TeleopElevatorTest. */
-  private Elevator s_ElevatorTest;
+  private ShoulderSub s_Shoulder;
   private DoubleSupplier s_GoalPosition;
 
-  public TeleopElevator(Elevator s_ElevatorTest, DoubleSupplier GoalPosition) {
+  public TeleopShoulder(ShoulderSub s_Shoulder, DoubleSupplier GoalPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.s_ElevatorTest = s_ElevatorTest;
+    this.s_Shoulder = s_Shoulder;
     this.s_GoalPosition = GoalPosition;
 
-    addRequirements(s_ElevatorTest);
+    addRequirements(s_Shoulder);
   }
 
   // Called when the command is initially scheduled.
@@ -29,7 +30,7 @@ public class TeleopElevator extends CommandBase {
   @Override
    public void execute() {
       
-      s_ElevatorTest.joystickPosition(s_GoalPosition.getAsDouble()); 
+    s_Shoulder.joystickPosition(s_GoalPosition.getAsDouble()); 
   }
   // Called once the command ends or is interrupted.
   @Override

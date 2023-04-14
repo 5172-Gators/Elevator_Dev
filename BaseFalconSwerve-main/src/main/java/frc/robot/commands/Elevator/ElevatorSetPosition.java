@@ -4,17 +4,20 @@
 
 package frc.robot.commands.Elevator;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.ElevatorSub;
 public class ElevatorSetPosition extends CommandBase {
   /** Creates a new TeleopElevatorTest. */
-  private Elevator s_ElevatorTest;
-
-  public ElevatorSetPosition(Elevator s_ElevatorTest) {
+  private ElevatorSub s_Elevator;
+private DoubleSupplier s_goalPosition;
+ 
+public ElevatorSetPosition(ElevatorSub s_Elevator, DoubleSupplier goalPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.s_ElevatorTest = s_ElevatorTest;
-
-    addRequirements(s_ElevatorTest);
+    this.s_Elevator = s_Elevator;
+this.s_goalPosition = goalPosition;
+    addRequirements(s_Elevator);
   }
 
   // Called when the command is initially scheduled.
@@ -25,7 +28,7 @@ public class ElevatorSetPosition extends CommandBase {
   @Override
    public void execute() {
       
-      s_ElevatorTest.setPosition(30000); 
+      s_Elevator.setPosition(s_goalPosition.getAsDouble()); 
   }
   // Called once the command ends or is interrupted.
   @Override
@@ -35,7 +38,7 @@ public class ElevatorSetPosition extends CommandBase {
   @Override
   public boolean isFinished() {
     
-    if(s_ElevatorTest.ElevatorPosition() < 30000 + 5000  && s_ElevatorTest.ElevatorPosition() > 30000 - 5000)
+    if(s_Elevator.ElevatorPosition() < 30000 + 5000  && s_Elevator.ElevatorPosition() > 30000 - 5000)
     {
       return true;
     } else

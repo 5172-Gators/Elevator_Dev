@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Elevator extends SubsystemBase {
+public class ElevatorSub extends SubsystemBase {
   /** Creates a new ElevatorTest. */
   private static double kDt = 0.02;
   private final TalonFX elevatorMotorOne;
@@ -44,7 +44,7 @@ public class Elevator extends SubsystemBase {
   private double m_encoder = 0;
   private double m_goalPosition;
 
-  public Elevator() {
+  public ElevatorSub() {
 
     // initialize motors
     // the right motor will spin clockwise and the left motor will go counter
@@ -130,5 +130,9 @@ public class Elevator extends SubsystemBase {
     elevatorMotorTwo.set(TalonFXControlMode.Position, m_goalPosition);
     
 
+  }
+
+  public boolean atSetpoint() {
+    return false;
   }
 }

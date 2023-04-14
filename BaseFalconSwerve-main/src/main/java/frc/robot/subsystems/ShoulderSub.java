@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Shoulder extends SubsystemBase {
+public class ShoulderSub extends SubsystemBase {
   /** Creates a new ElevatorTest. */
   private static double kDt = 0.02;
   private final TalonFX ShoulderMotorOne;
@@ -47,7 +47,7 @@ public class Shoulder extends SubsystemBase {
   private double m_encoder = 0;
   private double m_goalPosition;
 
-  public Shoulder() {
+  public ShoulderSub() {
 
     // initialize motors
     // the right motor will spin clockwise and the left motor will go counter
@@ -97,6 +97,9 @@ public class Shoulder extends SubsystemBase {
     if (goalPosition > Constants.Shoulder.lowerLimit) {
      goalPosition = Constants.Shoulder.lowerLimit;
    }
+   else if (goalPosition< Constants.Shoulder.upperLimit){
+    goalPosition = Constants.Shoulder.upperLimit;
+   }
 
 
     m_goalPosition = goalPosition;
@@ -124,4 +127,8 @@ public class Shoulder extends SubsystemBase {
     ShoulderMotorOne.set(TalonFXControlMode.Position, m_goalPosition);
 
   }
+
+public boolean atSetpoint() {
+    return false;
+}
 }

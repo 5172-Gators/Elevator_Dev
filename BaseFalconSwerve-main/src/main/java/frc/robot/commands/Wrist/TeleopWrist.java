@@ -7,13 +7,13 @@ package frc.robot.commands.Wrist;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.WristSub;
 public class TeleopWrist extends CommandBase {
   /** Creates a new TeleopElevatorTest. */
-  private Wrist s_Wrist;
+  private WristSub s_Wrist;
   private DoubleSupplier s_GoalPosition;
 
-  public TeleopWrist(Wrist s_Wrist, DoubleSupplier GoalPosition) {
+  public TeleopWrist(WristSub s_Wrist, DoubleSupplier GoalPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.s_Wrist = s_Wrist;
     this.s_GoalPosition = GoalPosition;

@@ -7,13 +7,13 @@ package frc.robot.commands.Elevator;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.ElevatorSub;
 public class TeleopElevator extends CommandBase {
   /** Creates a new TeleopElevatorTest. */
-  private Elevator s_ElevatorTest;
+  private ElevatorSub s_ElevatorTest;
   private DoubleSupplier s_GoalPosition;
 
-  public TeleopElevator(Elevator s_ElevatorTest, DoubleSupplier GoalPosition) {
+  public TeleopElevator(ElevatorSub s_ElevatorTest, DoubleSupplier GoalPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.s_ElevatorTest = s_ElevatorTest;
     this.s_GoalPosition = GoalPosition;

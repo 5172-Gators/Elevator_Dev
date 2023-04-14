@@ -303,6 +303,8 @@ public final class Constants {
         CONEMID(5.81731, 35, 0),
         CUBEMID(1.427, 16.5, 0),
         LOW(.5236, .25, 0),
+        CONELOW(5.9, 1.5,0),
+        CUBELOW(1.425, .25,0),
         STANDBY(1.1765, 100, 0),
         CUBEINTAKE(.1, 0.3, 0),
         STANDINGCONEINTAKE(5.106, 14.380, 0),
@@ -331,6 +333,21 @@ public final class Constants {
         }
 
     }
+    public enum GamePiece {
+        CUBE(1),
+        CONE(-1);
+
+        private double direction;
+
+        private GamePiece(double value) {
+            direction = value;
+        }
+
+        public double getDirection() {
+            return direction;
+        }
+    }
+
     public static final class Shoulder{
         public static final int ShoulderMotorID = 52;
         // public static final int currentLimit = 20;

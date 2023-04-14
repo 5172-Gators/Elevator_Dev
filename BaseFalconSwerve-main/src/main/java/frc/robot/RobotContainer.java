@@ -20,7 +20,7 @@ import frc.robot.commands.Elevator.ElevatorSetPositionHigh;
 import frc.robot.commands.Elevator.TeleopElevator;
 import frc.robot.commands.Wrist.WristSetPosition;
 import frc.robot.commands.Shoulder.ShoulderSetPosition;
-
+import frc.robot.commands.Shoulder.TeleopShoulder;
 /* Subsystems */
 import frc.robot.subsystems.*;
 
@@ -81,9 +81,9 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final Intake s_Intake = new Intake();
-    private final Wrist s_Wrist = new Wrist();
-    private final Elevator s_Elevator = new Elevator();
-    private final Shoulder s_Shoulder = new Shoulder();
+    private final WristSub s_Wrist = new WristSub();
+    private final ElevatorSub s_Elevator = new ElevatorSub();
+    private final ShoulderSub s_Shoulder = new ShoulderSub();
 
     private double elevatorDesiredPosition = 0;
     // private final Wrist s_Wrist = new Wrist();
@@ -106,6 +106,9 @@ public class RobotContainer {
                 new TeleopElevator(
                         s_Elevator,
                         () -> -operatorStick.getY() * 1000));
+        s_Shoulder.setDefaultCommand(new TeleopShoulder(
+                s_Shoulder,
+                () -> operatorStick.getX() * 10));
 
         // Configure the button bindings
         configureButtonBindings();
@@ -125,14 +128,17 @@ public class RobotContainer {
 
         /* Operator Button */
         // robotCentric.onTrue(new ElevatorSetPosition(s_ElevatorTest));
-       // placeHighButton.onTrue(new ElevatorSetPositionHigh(s_Elevator));
-      // placeHighButton.onTrue(new ElevatorSetPositionHigh(s_Elevator));
+        // placeHighButton.onTrue(new ElevatorSetPositionHigh(s_Elevator));
+        // placeHighButton.onTrue(new ElevatorSetPositionHigh(s_Elevator));
         // placeLowButton.onTrue(new SetPositionLow(s_ElevatorTest));
         outTakeSlowButton.onTrue(new InstantCommand(() -> s_Intake.setMotor(1.0)));
 
-        //outTakeFastButton.onTrue( new InstantCommand(()-> s_Shoulder.setPosition(-3500.0)));
-        
-        //outTakeFastButton.onTrue(new InstantCommand(() -> s_Wrist.setPosition(8000)));
+        // outTakeFastButton.onTrue( new InstantCommand(()->
+        // s_Shoulder.setPosition(-3500.0)));
+
+        // outTakeFastButton.onTrue(new InstantCommand(() ->
+        // s_Wrist.setPosition(8000)));
+
     }
 
     /**

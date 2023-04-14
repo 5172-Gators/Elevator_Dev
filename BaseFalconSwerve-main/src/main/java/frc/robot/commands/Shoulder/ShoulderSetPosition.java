@@ -5,14 +5,14 @@
 package frc.robot.commands.Shoulder;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Shoulder;
+import frc.robot.subsystems.ElevatorSub;
+import frc.robot.subsystems.ShoulderSub;
 public class ShoulderSetPosition extends CommandBase {
   /* Creates a new shoulder */
   
-  private Shoulder s_Shoulder;
+  private ShoulderSub s_Shoulder;
 
-  public ShoulderSetPosition(Shoulder s_Shoulder) {
+  public ShoulderSetPosition(ShoulderSub s_Shoulder) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.s_Shoulder = s_Shoulder;
 
