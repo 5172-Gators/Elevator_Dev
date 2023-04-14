@@ -4,15 +4,19 @@
 
 package frc.robot.commands.Elevator;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Elevator;
 public class ElevatorSetPosition extends CommandBase {
   /** Creates a new TeleopElevatorTest. */
   private Elevator s_ElevatorTest;
+  private DoubleSupplier s_GoalPosition;
 
-  public ElevatorSetPosition(Elevator s_ElevatorTest) {
+  public ElevatorSetPosition(Elevator s_ElevatorTest, DoubleSupplier GoalPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.s_ElevatorTest = s_ElevatorTest;
+    this.s_GoalPosition = GoalPosition;
 
     addRequirements(s_ElevatorTest);
   }
@@ -25,7 +29,7 @@ public class ElevatorSetPosition extends CommandBase {
   @Override
    public void execute() {
       
-      s_ElevatorTest.setPosition(30000); 
+      s_ElevatorTest.setPosition(s_GoalPosition.getAsDouble()); 
   }
   // Called once the command ends or is interrupted.
   @Override

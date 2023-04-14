@@ -6,7 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
+//import com.ctre.phoenix.motorcontrol.ControlMode;
 
 //import java.util.function.DoubleSupplier;
 
@@ -76,6 +76,7 @@ public class Elevator extends SubsystemBase {
     elevatorMotorTwo.setInverted(TalonFXInvertType.CounterClockwise);
     elevatorMotorTwo.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);    
     elevatorMotorOne.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+    
     elevatorMotorOne.setSensorPhase(Constants.Elevator.kSensorPhase);
     elevatorMotorTwo.setSensorPhase(Constants.Elevator.kSensorPhase);
 
@@ -88,9 +89,6 @@ public class Elevator extends SubsystemBase {
     // elevatorMotorTwo.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,
     //     Constants.Elevator.kPIDLoopIdx,
     //     Constants.Elevator.kTimeoutMs);
-
-    elevatorMotorOne.setSensorPhase(Constants.Elevator.kSensorPhase);
-    elevatorMotorTwo.setSensorPhase(Constants.Elevator.kSensorPhase);
 
     elevatorMotorOne.configAllowableClosedloopError(0, Constants.Elevator.kmaxAllowableError, Constants.Elevator.kTimeoutMs);
     //elevatorMotorTwo.configAllowableClosedloopError(0, Constants.Elevator.kmaxAllowableError, Constants.Elevator.kTimeoutMs);
