@@ -1,5 +1,6 @@
 package frc.robot;
 
+import java.util.Optional;
 import java.util.function.DoubleSupplier;
 import java.util.stream.IntStream;
 
@@ -14,6 +15,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.GamePiece;
 import frc.robot.Constants.Position;
 
+/* Shuffleboard */
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /* Autos */
 import frc.robot.autos.*;
 import frc.robot.commands.SetAllPositions;
@@ -45,6 +49,9 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
 
     public static GamePiece gamePiece = GamePiece.CONE;
+
+    /* Auto Selector */
+    private final SendableChooser<Command> autoChooser = new SendableChooser<Command>();
 
     /* Controllers */
     private final static Joystick translateStick = new Joystick(0);
@@ -129,9 +136,17 @@ public class RobotContainer {
                 s_Wrist,
                 () -> operatorStick.getTwist() * 1000));
 
-        //s_Intake.setDefaultCommand(
-//new TeleopIntake(s_Intake, .75, operatorStick.getRawButton(3), operatorStick.getRawButton(4) ) );      // Configure the button bindings
+        // Configure the button bindings
         configureButtonBindings();
+
+        autoChooser.addOption("Do Nothing", null);
+        autoChooser.addOption("Middle Auto", new middleAuto(s_Swerve, s_Elevator, s_Shoulder, s_Wrist, s_Intake));
+        autoChooser.addOption("Left Or Right Auto", new sideAuto(s_Swerve, s_Elevator, s_Shoulder, s_Wrist, s_Intake));
+
+       // autoChooser.addOption("Outtake", new Outtake(m_intake));
+       // autoChooser.addOption("Outtake And Backup", new OuttakeAndBackup(m_drive, m_intake));
+
+        SmartDashboard.putData(autoChooser);
     }
 
     /**
@@ -227,7 +242,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return new exampleAuto(s_Swerve);
+
+        return autoChooser.getSelected();
     }
 }
