@@ -13,18 +13,23 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.GamePiece;
 import frc.robot.Constants.Position;
+
 /* Autos */
 import frc.robot.autos.*;
 import frc.robot.commands.SetAllPositions;
+
 /* Commands */
 import frc.robot.commands.Drive.TeleopSwerve;
 import frc.robot.commands.Elevator.ElevatorSetPosition;
 import frc.robot.commands.Elevator.ElevatorSetPositionHigh;
 import frc.robot.commands.Elevator.TeleopElevator;
+import frc.robot.commands.Intake.TeleopIntake;
+import frc.robot.commands.Intake.intakeStop;
 import frc.robot.commands.Wrist.TeleopWrist;
 import frc.robot.commands.Wrist.WristSetPosition;
 import frc.robot.commands.Shoulder.ShoulderSetPosition;
 import frc.robot.commands.Shoulder.TeleopShoulder;
+
 /* Subsystems */
 import frc.robot.subsystems.*;
 
@@ -79,8 +84,8 @@ public class RobotContainer {
     private static final int wristAxis = Joystick.AxisType.kX.value;
 
     private static final JoystickButton stopIntake = new JoystickButton(operatorStick, 1);
-    private static final JoystickButton outTakeSlowButton = new JoystickButton(operatorStick, 2);
-    private static final JoystickButton outTakeFastButton = new JoystickButton(operatorStick, 3);
+    private static final JoystickButton cubeInConeOutButton = new JoystickButton(operatorStick, 3);
+    private static final JoystickButton coneInCubeOutButton = new JoystickButton(operatorStick, 4);
     // private static final JoystickButton toggleLEDButton = new
     // JoystickButton(operatorStick, 4);
     private static final JoystickButton pickHumanPlayerButton = new JoystickButton(operatorStick, 5);
@@ -124,7 +129,8 @@ public class RobotContainer {
                 s_Wrist,
                 () -> operatorStick.getTwist() * 1000));
 
-        // Configure the button bindings
+        //s_Intake.setDefaultCommand(
+//new TeleopIntake(s_Intake, .75, operatorStick.getRawButton(3), operatorStick.getRawButton(4) ) );      // Configure the button bindings
         configureButtonBindings();
     }
 
@@ -158,10 +164,10 @@ public class RobotContainer {
 
         stopIntake.onTrue(new InstantCommand(() -> s_Intake.setMotor(0)));// button 1
 
-         outTakeSlowButton.whileTrue(new InstantCommand(() -> s_Intake.setMotor(0.5)));
+        //cubeInConeOutButton.whileTrue(new TeleopIntake(s_Intake, 0.75));
          // button 2
 
-         outTakeFastButton.whileTrue(new InstantCommand(()-> s_Intake.setMotor(-0.5)));
+        //coneInCubeOutButton.whileTrue(new TeleopIntake(s_Intake, -0.75));
         // // button 3
 
         // // button 4
@@ -186,14 +192,14 @@ public class RobotContainer {
         // new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.CUBEINTAKE, ()
         // -> GamePiece.CUBE)));
 
-        // stowIntakeButton.onTrue(new SequentialCommandGroup( // button 9
-        // new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.STOWED, () ->
-        // GamePiece.CONE)));
+        stowIntakeButton.onTrue(new SequentialCommandGroup( // button 9
+        new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.STOWED, () ->
+        GamePiece.CONE)));
 
-        // placeHighButton.onTrue(new SequentialCommandGroup( // button 10
-        // new InstantCommand(() -> setGamePiece(GamePiece.CUBE)),
-        // new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.HIGH, () ->
-        // GamePiece.CUBE)));
+        placeHighButton.onTrue(new SequentialCommandGroup( // button 10
+        new InstantCommand(() -> setGamePiece(GamePiece.CUBE)),
+        new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.HIGH, () ->
+        GamePiece.CUBE)));
 
         // placeMidButton.onTrue(new SequentialCommandGroup( // button 11
         // new InstantCommand(() -> setGamePiece(GamePiece.CUBE)),

@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -164,8 +166,8 @@ public final class Constants {
 
         public static final double stoppedRPMThreshold = .01;
 
-        public static final double coneIntakeSpeed = 8;
-        public static final double cubeIntakeSpeed = 4;
+        public static final double coneIntakeSpeed = .75;
+        public static final double cubeIntakeSpeed = -.75;
 
         public static final double coneOuttakeSpeed = 4;
         public static final double coneShootSpeed = 12;
@@ -190,7 +192,6 @@ public final class Constants {
         public static final int motorTwoId = 42;
         public static final int currentLimit = 30;
         public static final double maxMotorVoltage = .5;
-        public static final Double maxExtension = -60000.0;
 
         public static final int kSlotIdx = 0;
         public static final int kPIDLoopIdx = 0;
@@ -201,6 +202,9 @@ public final class Constants {
         public static final double elevatorKD = 6.0;
         public static final double kF = 0;
         public static final double elevatorKF = 0;
+		public static final double minExtension = 0;
+        
+        public static final Double maxExtension = 102440.0;
 
         public static boolean kSensorPhase = true;
     	public static boolean kMotorInvert = true;
@@ -287,32 +291,35 @@ public final class Constants {
         public static final int kPIDLoopIdx = 0;
         public static final int kTimeoutMs = 30;
 
-        public static final double wristKP = 1.0;
+        public static final double wristKP = .25;
         public static final double wristKI = 0.0;
         public static final double wristKD = 0.0;
+        
+        public static final double wristKF = 0;
 
 
         public static final double motorGearRatio = 1 / 15.0;
         public static final double absoluteEncoderOffset = 5.412927;
-        public static final double wristKF = 0;
         public static final double kWristDeadband = 100;
         public static final int kWristCancoderID = 0;
         public static final boolean kSensorPhase = true;
+        public static final double minExtension =-70000;
+        public static final double maxExtension = 0;
 
     }
 
     public enum Position {
 
-        HIGH(0, 60000, 0 ),
-        CONEHIGH(.067, 35, 0),
-        CUBEHIGH(1.55, 35, 0),
+        HIGH(21051, 80000, -7328 ),
+        CONEHIGH(21051, 80000, -7328 ),
+        CUBEHIGH(-20000, 80000, -15000),
         MID(0, 0, 0),
         CONEMID(5.81731, 35, 0),
         CUBEMID(1.427, 16.5, 0),
         LOW(.5236, 0, 0),
         CONELOW(5.9, 1.5,0),
         CUBELOW(1.425, .25,0),
-        STANDBY(1.1765, 100, 0),
+        STANDBY(0, 0, 0),
         CUBEINTAKE(.1, 0.3, 0),
         STANDINGCONEINTAKE(5.106, 14.380, 0),
         TIPPEDCONEINTAKE(5.572, 1.333, 0),
@@ -446,6 +453,8 @@ public final class Constants {
         public static final double absoluteEncoderOffset = 5.412927;
         public static final double ShoulderKF = 0;
         public static final double kShoulderDeadband = 500;
+        public static final double maxExtension = 0;
+        public static final double minExtension = -24305;
 
         
     }

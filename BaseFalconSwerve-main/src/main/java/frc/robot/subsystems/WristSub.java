@@ -108,7 +108,12 @@ public class WristSub extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     m_encoder = wristMotor.getSelectedSensorPosition();// * (1.0 / 360.0 * 2.0 * Math.PI * 1.5);
-
+    if (m_goalPosition > Constants.Wrist.maxExtension) {
+      m_goalPosition = Constants.Wrist.maxExtension;
+    }
+    else if (m_goalPosition< Constants.Wrist.minExtension){
+      m_goalPosition= Constants.Wrist.minExtension;
+    }
     SmartDashboard.putNumber("Wrist Position", m_encoder);
     SmartDashboard.putNumber("Wrist Goal Position", m_goalPosition);
     SmartDashboard.putNumber("Wrist Motor Output", wristMotor.getMotorOutputPercent());

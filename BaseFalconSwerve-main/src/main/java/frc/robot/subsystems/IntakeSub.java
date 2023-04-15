@@ -79,6 +79,10 @@ public class IntakeSub extends SubsystemBase {
         return m_intakeMotor.getSelectedSensorVelocity();
     }
 
+    public void stopIntake(){
+        m_intakeMotor.set(TalonFXControlMode.PercentOutput, 0);
+    }
+
     @Override
     public void periodic() {
         // returns in amps

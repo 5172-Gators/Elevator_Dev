@@ -105,9 +105,8 @@ public class ElevatorSub extends SubsystemBase {
   }
 
   public void setPosition(double goalPosition) {
-    if (goalPosition < Constants.Elevator.maxExtension) {
-      goalPosition = Constants.Elevator.maxExtension;
-    }
+
+    
     m_goalPosition = goalPosition;
   }
 
@@ -123,7 +122,12 @@ public class ElevatorSub extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     m_encoder = elevatorMotorOne.getSelectedSensorPosition();// * (1.0 / 360.0 * 2.0 * Math.PI * 1.5);
-
+    if (m_goalPosition > Constants.Elevator.maxExtension) {
+      m_goalPosition = Constants.Elevator.maxExtension;
+    }
+    else if (m_goalPosition< Constants.Elevator.minExtension){
+      m_goalPosition= Constants.Elevator.minExtension;
+    }
     SmartDashboard.putNumber("Elevator Position", m_encoder);
     SmartDashboard.putNumber("Elevator Goal Position", m_goalPosition);
     SmartDashboard.putNumber("Elevator Motor Percentage", elevatorMotorOne.getMotorOutputPercent());
@@ -137,8 +141,8 @@ public class ElevatorSub extends SubsystemBase {
   }
 
   public boolean atSetpoint() {
-    if (ElevatorPosition() < m_goalPosition + Constants.Elevator.kElevatorDeadband
-        || ElevatorPosition() > Constants.Elevator.kElevatorDeadband) {
+    if (ElevatorPosition() > m_goalPosition - Constants.Elevator.kElevatorDeadband
+        || ElevatorPosition() <m_goalPosition +Constants.Elevator.kElevatorDeadband) {
       return true;
     } else {
       return false;

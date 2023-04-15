@@ -1,8 +1,10 @@
 package frc.robot.commands.Intake;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -14,32 +16,38 @@ import frc.robot.subsystems.WristSub;
 
 public class TeleopIntake extends CommandBase {
     private IntakeSub s_Intake;
-    private DoubleSupplier moveVal;
+    private double moveVal;
+    private boolean m_in;
+    private boolean m_out;
 
-    public TeleopIntake(IntakeSub s_Intake, DoubleSupplier moveVal) {
+    public TeleopIntake(IntakeSub s_Intake, double moveVal, BooleanSupplier in, BooleanSupplier out) {
         this.s_Intake = s_Intake;
         this.moveVal = moveVal;
-
+        this.m_in = in.getAsBoolean();
+        this.m_out = out.getAsBoolean();
         addRequirements(s_Intake);
     }
 
     @Override
     public void execute() {
-        double maxSpeed = RobotContainer.gamePiece == GamePiece.CONE ? Constants.Intake.coneIntakeSpeed
-                : Constants.Intake.cubeIntakeSpeed;
-
-        double power = MathUtil.clamp(
-                ((moveVal.getAsDouble()) * maxSpeed + .5) * RobotContainer.gamePiece.getDirection(),
-                -maxSpeed,
-                maxSpeed);
-
-        s_Intake.setMotor(power);
-
-        // Check if a cone was intaked, if so switch PID on wrist.
-        // if (power != 0 &&
-        //         Math.abs(s_Intake.getVelocity()) < Constants.Intake.stoppedRPMThreshold
-        //         && RobotContainer.gamePiece == GamePiece.CONE) {
-        //     s_WristSub.setPIDFFMode(PIDFFmode.WEIGHTED);
-        // }
+      if (m_in) {
+            s_Intake.setMotor(Constants.Intake.coneIntakeSpeed);
+        } else if (m_out) {
+            s_Intake.setMotor(Constants.Intake.cubeIntakeSpeed);
+        } else {
+            s_Intake.setMotor(0);
+        } 
     }
+
+    // public void end(boolean Interrupted){
+    // s_Intake.setMotor(0);
+    // }
+
+    @Override
+    public boolean isFinished() {
+
+        // s_Intake.setMotor(0);
+        return true;
+    }
+
 }
