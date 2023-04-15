@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 //import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -18,12 +19,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * The intake subsysatem will be used to set up the motors and encoders for the
  * intake.
  */
-public class Intake extends SubsystemBase {
+public class IntakeSub extends SubsystemBase {
 
     // Constants
     private static final double k_intakePercentage = .25;
     private static final double k_openLoopRampRate = 0.1;
-    private static final int k_currentLimit = 39; // Current limit for intake falcon 500
+    private static final int k_currentLimit = 30; // Current limit for intake falcon 500
 
     // Components
     private TalonFX m_intakeMotor;
@@ -36,14 +37,14 @@ public class Intake extends SubsystemBase {
     /**
      * Constructor for intake subsystem.
      */
-    public Intake() {
+    public IntakeSub() {
         m_intakeMotor = new TalonFX(Constants.Intake.motorId);// new CANSparkMax(Constants.Intake.motorId,
                                                                       // MotorType.kBrushless);
         // Configure all settings on Talons
         TalonFXConfiguration config = new TalonFXConfiguration();
         config.voltageCompSaturation = 12.0;
         config.openloopRamp = k_openLoopRampRate;
-        config.supplyCurrLimit = new SupplyCurrentLimitConfiguration(true, k_currentLimit, 0, 0);
+        config.statorCurrLimit = new StatorCurrentLimitConfiguration(true, Constants.Intake.currentLimit, 0, 0);
 
         m_intakeMotor.configAllSettings(config);
         m_intakeMotor.enableVoltageCompensation(true);
@@ -67,7 +68,7 @@ public class Intake extends SubsystemBase {
      */
 
     public void setMotor(double speed) {
-        m_intakeMotor.set(TalonFXControlMode.PercentOutput, k_intakePercentage); // setVoltage(speed);
+        m_intakeMotor.set(TalonFXControlMode.PercentOutput, speed); // setVoltage(speed);
     }
 
     public double getPDMCurrent() {

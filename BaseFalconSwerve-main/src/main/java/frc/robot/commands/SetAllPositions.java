@@ -52,9 +52,12 @@ public class SetAllPositions extends CommandBase {
         if (k_gamePiece.get() == GamePiece.CONE) {
           s_Wrist.setPosition(Position.CONEHIGH.getWrist());
           s_Elevator.setPosition(Position.CONEHIGH.getElev());
+          s_Shoulder.setPosition(Position.CONEHIGH.getShoulder());
+
         } else if (k_gamePiece.get() == GamePiece.CUBE) {
           s_Wrist.setPosition(Position.CUBEHIGH.getWrist());
           s_Elevator.setPosition(Position.CUBEHIGH.getElev());
+          s_Shoulder.setPosition(Position.CUBEHIGH.getShoulder());
         }
         break;
 
@@ -62,9 +65,12 @@ public class SetAllPositions extends CommandBase {
         if (k_gamePiece.get() == GamePiece.CONE) {
           s_Wrist.setPosition(Position.CONEMID.getWrist());
           s_Elevator.setPosition(Position.CONEMID.getElev());
+          s_Shoulder.setPosition(Position.CONEMID.getShoulder());
+
         } else if (k_gamePiece.get() == GamePiece.CUBE) {
           s_Wrist.setPosition(Position.CUBEMID.getWrist());
           s_Elevator.setPosition(Position.CUBEMID.getElev());
+          s_Shoulder.setPosition(Position.CUBEMID.getShoulder());
         }
         break;
 
@@ -72,15 +78,19 @@ public class SetAllPositions extends CommandBase {
         if (k_gamePiece.get() == GamePiece.CONE) {
           s_Wrist.setPosition(Position.CONELOW.getWrist());
           s_Elevator.setPosition(Position.CONELOW.getElev());
+          s_Shoulder.setPosition(Position.CONELOW.getShoulder());
+
         } else if (k_gamePiece.get() == GamePiece.CUBE) {
           s_Wrist.setPosition(Position.CUBELOW.getWrist());
           s_Elevator.setPosition(Position.CUBELOW.getElev());
+          s_Shoulder.setPosition(Position.CONELOW.getShoulder());
         }
         break;
 
       default:
         s_Wrist.setPosition(k_position.getWrist());
         s_Elevator.setPosition(k_position.getElev());
+        s_Shoulder.setPosition(k_position.getShoulder());
         break;
 
     }
