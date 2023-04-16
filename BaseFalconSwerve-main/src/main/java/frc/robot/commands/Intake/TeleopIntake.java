@@ -20,28 +20,27 @@ public class TeleopIntake extends CommandBase {
     private boolean m_in;
     private boolean m_out;
 
-    public TeleopIntake(IntakeSub s_Intake, double moveVal, BooleanSupplier in, BooleanSupplier out) {
+    public TeleopIntake(IntakeSub s_Intake, double moveVal) {
         this.s_Intake = s_Intake;
         this.moveVal = moveVal;
-        this.m_in = in.getAsBoolean();
-        this.m_out = out.getAsBoolean();
         addRequirements(s_Intake);
     }
 
     @Override
     public void execute() {
-      if (m_in) {
-            s_Intake.setMotor(Constants.Intake.coneIntakeSpeed);
-        } else if (m_out) {
-            s_Intake.setMotor(Constants.Intake.cubeIntakeSpeed);
-        } else {
-            s_Intake.setMotor(0);
-        } 
-    }
+
+    //   if (m_in) {
+    //         s_Intake.setMotor(Constants.Intake.coneIntakeSpeed);
+    //     } else if (m_out) {
+    //         s_Intake.setMotor(Constants.Intake.cubeIntakeSpeed);
+    //     } else {
+    //         s_Intake.setMotor(0);
+    //     } 
+    
 
     // public void end(boolean Interrupted){
-    // s_Intake.setMotor(0);
-    // }
+     s_Intake.setMotor(moveVal);
+    }
 
     @Override
     public boolean isFinished() {

@@ -74,18 +74,18 @@ public class SetAllPositions extends CommandBase {
         }
         break;
 
-      case LOW:
-        if (k_gamePiece.get() == GamePiece.CONE) {
-          s_Wrist.setPosition(Position.CONELOW.getWrist());
-          s_Elevator.setPosition(Position.CONELOW.getElev());
-          s_Shoulder.setPosition(Position.CONELOW.getShoulder());
+      // case LOW:
+      //   if (k_gamePiece.get() == GamePiece.CONE) {
+      //     s_Wrist.setPosition(Position.CONELOW.getWrist());
+      //     s_Elevator.setPosition(Position.CONELOW.getElev());
+      //     s_Shoulder.setPosition(Position.CONELOW.getShoulder());
 
-        } else if (k_gamePiece.get() == GamePiece.CUBE) {
-          s_Wrist.setPosition(Position.CUBELOW.getWrist());
-          s_Elevator.setPosition(Position.CUBELOW.getElev());
-          s_Shoulder.setPosition(Position.CONELOW.getShoulder());
-        }
-        break;
+      //   } else if (k_gamePiece.get() == GamePiece.CUBE) {
+      //     s_Wrist.setPosition(Position.CUBELOW.getWrist());
+      //     s_Elevator.setPosition(Position.CUBELOW.getElev());
+      //     s_Shoulder.setPosition(Position.CONELOW.getShoulder());
+      //   }
+        // break;
 
       default:
         s_Wrist.setPosition(k_position.getWrist());

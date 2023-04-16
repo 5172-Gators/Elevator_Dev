@@ -90,11 +90,10 @@ public class RobotContainer {
     private static final int elevatorAxis = Joystick.AxisType.kY.value;
     private static final int wristAxis = Joystick.AxisType.kX.value;
 
-    private static final JoystickButton stopIntake = new JoystickButton(operatorStick, 1);
-    private static final JoystickButton cubeInConeOutButton = new JoystickButton(operatorStick, 3);
-    private static final JoystickButton coneInCubeOutButton = new JoystickButton(operatorStick, 4);
-    // private static final JoystickButton toggleLEDButton = new
-    // JoystickButton(operatorStick, 4);
+    //private static final JoystickButton stopIntake = new JoystickButton(operatorStick, 1);
+    private static final JoystickButton stopIntake = new JoystickButton(operatorStick, 2);
+    private static final JoystickButton coneInCubeOutButton = new JoystickButton(operatorStick, 3);
+    private static final JoystickButton cubeInConeOutButton = new JoystickButton(operatorStick, 4);
     private static final JoystickButton pickHumanPlayerButton = new JoystickButton(operatorStick, 5);
     private static final JoystickButton pickStandingConeButton = new JoystickButton(operatorStick, 6);
     private static final JoystickButton pickTippedConeButton = new JoystickButton(operatorStick, 7);
@@ -137,16 +136,13 @@ public class RobotContainer {
                 () -> operatorStick.getTwist() * 1000));
 
         // Configure the button bindings
-        configureButtonBindings();
+         configureButtonBindings();
 
-        autoChooser.addOption("Do Nothing", null);
-        autoChooser.addOption("Middle Auto", new middleAuto(s_Swerve, s_Elevator, s_Shoulder, s_Wrist, s_Intake));
-        autoChooser.addOption("Left Or Right Auto", new sideAuto(s_Swerve, s_Elevator, s_Shoulder, s_Wrist, s_Intake));
+        // autoChooser.addOption("Do Nothing", null);
+        // autoChooser.addOption("Middle Auto", new middleAuto(s_Swerve, s_Elevator, s_Shoulder, s_Wrist, s_Intake));
+        // autoChooser.addOption("Left Or Right Auto", new sideAuto(s_Swerve, s_Elevator, s_Shoulder, s_Wrist, s_Intake));
 
-       // autoChooser.addOption("Outtake", new Outtake(m_intake));
-       // autoChooser.addOption("Outtake And Backup", new OuttakeAndBackup(m_drive, m_intake));
-
-        SmartDashboard.putData(autoChooser);
+        // SmartDashboard.putData(autoChooser);
     }
 
     /**
@@ -154,7 +150,7 @@ public class RobotContainer {
      * created by
      * instantiating a {@link GenericHID} or one of its subclasses ({@link
      * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
-     * it to a {@link
+     * it t o a {@link
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
@@ -162,8 +158,8 @@ public class RobotContainer {
 
         // Translate Stick
 
-        intakeTrigger.onTrue(new InstantCommand(() -> s_Intake.setMotor(1))); // button 1
-        outtakeButton.onTrue(new InstantCommand(() -> s_Intake.setMotor(-1))); // button 2
+        // intakeTrigger.onTrue(new InstantCommand(() -> s_Intake.setMotor(1))); // button 1
+        // outtakeButton.onTrue(new InstantCommand(() -> s_Intake.setMotor(-1))); // button 2
         // selectConeButton.onTrue(new InstantCommand(()->
         // setGamePiece(GamePiece.CONE))); // button 3
         // selectCubeButton.onTrue(new InstantCommand(()->
@@ -177,20 +173,19 @@ public class RobotContainer {
 
         /* Operator Buttons */
 
-        stopIntake.onTrue(new InstantCommand(() -> s_Intake.setMotor(0)));// button 1
+        stopIntake.onTrue(new InstantCommand(() -> s_Intake.setMotor(0)));// button 2
 
-        //cubeInConeOutButton.whileTrue(new TeleopIntake(s_Intake, 0.75));
-         // button 2
+        coneInCubeOutButton.whileTrue(new InstantCommand(() -> s_Intake.setMotor(-0.75))); // button 3
 
-        //coneInCubeOutButton.whileTrue(new TeleopIntake(s_Intake, -0.75));
-        // // button 3
+        cubeInConeOutButton.whileTrue(new InstantCommand(() -> s_Intake.setMotor(0.75)));// button 4
 
-        // // button 4
 
-        // pickHumanPlayerButton.onTrue(new SequentialCommandGroup( // button 5
-        // new InstantCommand(() -> setGamePiece(GamePiece.CONE)),
-        // new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder,
-        // Position.HUMANPLAYERINTAKE, () -> GamePiece.CONE)));
+
+
+        pickHumanPlayerButton.onTrue(new SequentialCommandGroup( // button 5
+        new InstantCommand(() -> setGamePiece(GamePiece.CONE)),
+        new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder,
+        Position.HUMANPLAYERINTAKE, () -> GamePiece.CONE)));
 
         // pickStandingConeButton.onTrue(new SequentialCommandGroup( // button 6
         // new InstantCommand(() -> setGamePiece(GamePiece.CONE)),
@@ -202,10 +197,12 @@ public class RobotContainer {
         // new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder,
         // Position.TIPPEDCONEINTAKE, () -> GamePiece.CONE)));
 
-        // pickCubeButton.onTrue(new SequentialCommandGroup( // button 8
-        // new InstantCommand(() -> setGamePiece(GamePiece.CUBE)),
-        // new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.CUBEINTAKE, ()
-        // -> GamePiece.CUBE)));
+        pickCubeButton.onTrue(new SequentialCommandGroup( // button 8
+        new InstantCommand(() -> setGamePiece(GamePiece.CUBE)),
+        new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.CUBEINTAKE, ()
+        -> GamePiece.CUBE)));
+
+
 
         stowIntakeButton.onTrue(new SequentialCommandGroup( // button 9
         new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.STOWED, () ->
@@ -216,15 +213,15 @@ public class RobotContainer {
         new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.HIGH, () ->
         GamePiece.CUBE)));
 
-        // placeMidButton.onTrue(new SequentialCommandGroup( // button 11
-        // new InstantCommand(() -> setGamePiece(GamePiece.CUBE)),
-        // new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.MID, () ->
-        // GamePiece.CUBE)));
+        placeMidButton.onTrue(new SequentialCommandGroup( // button 11
+        new InstantCommand(() -> setGamePiece(GamePiece.CUBE)),
+        new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.MID, () ->
+        GamePiece.CUBE)));
 
-        // placeLowButton.onTrue(new SequentialCommandGroup( // button 12
-        // new InstantCommand(() -> setGamePiece(GamePiece.CUBE)),
-        // new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.LOW, () ->
-        // GamePiece.CUBE)));
+        placeLowButton.onTrue(new SequentialCommandGroup( // button 12
+        new InstantCommand(() -> setGamePiece(GamePiece.CUBE)),
+        new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.LOW, () ->
+        GamePiece.CUBE)));
 
     }
 
@@ -243,6 +240,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
 
-        return autoChooser.getSelected();
+        return new sideAuto(s_Swerve);
     }
 }

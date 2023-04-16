@@ -39,7 +39,7 @@ public class sideAuto extends SequentialCommandGroup {
     private final IntakeSub s_Intake = new IntakeSub();
     private final Swerve s_Swerve = new Swerve();
 
-    public sideAuto(Swerve s_Swerve, ElevatorSub s_Elevator, ShoulderSub s_Shoulder, WristSub s_Wrist, IntakeSub s_Intake){
+    public sideAuto(Swerve s_Swerve){
         TrajectoryConfig config =
             new TrajectoryConfig(
                     Constants.AutoConstants.kMaxSpeedMetersPerSecond,
@@ -106,6 +106,12 @@ public class sideAuto extends SequentialCommandGroup {
             new WaitCommand(0.5),
             new InstantCommand(() -> s_Intake.stopIntake()),
 
+            // stow arm
+            new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.STOWED, () -> GamePiece.CUBE),
+
+            // wait before starting path
+            new WaitCommand(0.75),
+
             // start path
             new InstantCommand(() -> s_Swerve.resetOdometry(trajectory1.getInitialPose())),
             swerveControllerCommand1,
@@ -113,7 +119,7 @@ public class sideAuto extends SequentialCommandGroup {
             // wait before starting next command
             new WaitCommand(0.5),
 
-            // balance on station
+            // back into community
             new InstantCommand(() -> s_Swerve.resetOdometry(backInside.getInitialPose())),
             swerveControllerCommand2,
 

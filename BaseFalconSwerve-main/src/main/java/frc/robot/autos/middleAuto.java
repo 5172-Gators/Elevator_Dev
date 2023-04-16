@@ -106,6 +106,12 @@ public class middleAuto extends SequentialCommandGroup {
             new WaitCommand(0.5),
             new InstantCommand(() -> s_Intake.stopIntake()),
 
+            // stow arm
+            new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.STOWED, () -> GamePiece.CUBE),
+
+            // wait before starting to drive
+            new WaitCommand(.75),
+
             // start path
             new InstantCommand(() -> s_Swerve.resetOdometry(trajectory1.getInitialPose())),
             swerveControllerCommand1,

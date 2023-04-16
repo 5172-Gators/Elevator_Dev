@@ -9,8 +9,11 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import frc.lib.VectorTools.HSV;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 
 public final class Constants {
     public static final double stickDeadband = 0.1;
@@ -208,7 +211,7 @@ public final class Constants {
 
         public static boolean kSensorPhase = true;
     	public static boolean kMotorInvert = true;
-        public static double kElevatorDeadband =100;
+        public static double kElevatorDeadband = 1000;
 
         //static final Gains kGains = new Gains(0.05, 0.0000, 6.0, 0.0, 0, .5);
 
@@ -310,21 +313,18 @@ public final class Constants {
 
     public enum Position {
 
-        HIGH(21051, 80000, -7328 ),
-        CONEHIGH(21051, 80000, -7328 ),
+        HIGH(21051, 80000, -7328),
+        CONEHIGH(21051, 80000, -7328),
         CUBEHIGH(-20000, 80000, -15000),
         MID(0, 0, 0),
-        CONEMID(5.81731, 35, 0),
-        CUBEMID(1.427, 16.5, 0),
-        LOW(.5236, 0, 0),
-        CONELOW(5.9, 1.5,0),
-        CUBELOW(1.425, .25,0),
-        STANDBY(0, 0, 0),
-        CUBEINTAKE(.1, 0.3, 0),
-        STANDINGCONEINTAKE(5.106, 14.380, 0),
-        TIPPEDCONEINTAKE(5.572, 1.333, 0),
-        HUMANPLAYERINTAKE(.8763, -40000, 0),
-        STOWED(0, 0, 0 );
+        LOW(-56672, 90928, -17555),
+        CONEMID(-56672, 90928,-17555),
+        CUBEMID(-11496, 45900, -562),
+        CUBEINTAKE(-30000, 971, -2400),
+        //STANDINGCONEINTAKE(5.106, 14.380, 0),
+        //TIPPEDCONEINTAKE(5.572, 1.333, 0),
+        HUMANPLAYERINTAKE(0, -40000, 0),
+        STOWED(-500, 0, 0);
         
 
         private double wristPos;
@@ -371,8 +371,8 @@ public final class Constants {
         public static final int EncoderID = 15;
 
         /* limits in motor ticks (abs value) */
-        public static final double upperLimit = 0.0; 
-        public static final double lowerLimit = -2938.0; 
+        public static final double upperLimit = -725; 
+        public static final double lowerLimit = -20064; 
 
         /* CANCoder limits */
         public static final double CANCoderUpperLimit = 285.117;
@@ -458,5 +458,6 @@ public final class Constants {
 
         
     }
-
 }
+
+    
