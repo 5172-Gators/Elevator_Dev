@@ -207,7 +207,7 @@ public final class Constants {
         public static final double elevatorKF = 0;
 		public static final double minExtension = 0;
         
-        public static final Double maxExtension = 102440.0;
+        public static final Double maxExtension = 98000.0;
 
         public static boolean kSensorPhase = true;
     	public static boolean kMotorInvert = true;
@@ -294,7 +294,7 @@ public final class Constants {
         public static final int kPIDLoopIdx = 0;
         public static final int kTimeoutMs = 30;
 
-        public static final double wristKP = .25;
+        public static final double wristKP = .15;
         public static final double wristKI = 0.0;
         public static final double wristKD = 0.0;
         
@@ -320,7 +320,7 @@ public final class Constants {
         LOW(-56672, 90928, -17555),
         CONEMID(-56672, 90928,-17555),
         CUBEMID(-11496, 45900, -562),
-        CUBEINTAKE(-30000, 971, -2400),
+        CUBEINTAKE(-22500, 971, -2400),
         //STANDINGCONEINTAKE(5.106, 14.380, 0),
         //TIPPEDCONEINTAKE(5.572, 1.333, 0),
         HUMANPLAYERINTAKE(0, -40000, 0),
@@ -372,7 +372,7 @@ public final class Constants {
 
         /* limits in motor ticks (abs value) */
         public static final double upperLimit = -725; 
-        public static final double lowerLimit = -20064; 
+        public static final double lowerLimit = -15800; 
 
         /* CANCoder limits */
         public static final double CANCoderUpperLimit = 285.117;
