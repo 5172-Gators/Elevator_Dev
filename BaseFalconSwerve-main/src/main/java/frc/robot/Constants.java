@@ -193,21 +193,21 @@ public final class Constants {
     public static final class Elevator {
         public static final int motorOneId = 41;
         public static final int motorTwoId = 42;
-        public static final int currentLimit = 30;
-        public static final double maxMotorVoltage = .5;
+        public static final int currentLimit = 60;
+       // public static final double maxMotorVoltage = 1;
 
         public static final int kSlotIdx = 0;
         public static final int kPIDLoopIdx = 0;
         public static final int kTimeoutMs = 30;
 
-        public static final double elevatorKP = .05;
+        public static final double elevatorKP = .5;
         public static final double elevatorKI = 0.0;
-        public static final double elevatorKD = 6.0;
+        public static final double elevatorKD = .0;
         public static final double kF = 0;
         public static final double elevatorKF = 0;
 		public static final double minExtension = 0;
         
-        public static final Double maxExtension = 98000.0;
+        public static final Double maxExtension = 120000.0;
 
         public static boolean kSensorPhase = true;
     	public static boolean kMotorInvert = true;

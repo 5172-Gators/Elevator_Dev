@@ -240,6 +240,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
 
-        return new sideAuto(s_Swerve);
+        return new exampleAuto(s_Swerve); //new sideAuto(s_Swerve);
     }
 }

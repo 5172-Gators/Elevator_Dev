@@ -9,22 +9,23 @@ import frc.robot.LEDConstants;
  * Orange with black wave
  */
 public class VectorWave extends LEDModeBase {
-    private double vectorWaveMiddleIndex = -LEDConstants.VectorWave.pauseBetween;
-    private HSV hsv = LEDConstants.VectorWave.hsv;
+    private double vectorWaveMiddleIndex = -LEDConstants.IdleMode.pauseBetween;
+
+    private double HSV hsv = new 
 
     public VectorWave(AddressableLEDBuffer m_ledBuffer) {
         super(m_ledBuffer);
     }
 
     public void execute() {
-        for (int i = 0; i < m_ledBuffer.getLength() / 2 + LEDConstants.VectorWave.pauseBetween; i++) {
+        for (int i = 0; i < m_ledBuffer.getLength() / 2 + LEDConstants.IdleMode.pauseBetween; i++) {
             int value =
                     MathUtil.clamp(
                                     (int)
-                                                    ((1 / LEDConstants.VectorWave.spread)
+                                                    ((1 / LEDConstants.IdleMode.spread)
                                                             * (Math.abs(vectorWaveMiddleIndex - i))
                                                             * hsv.v)
-                                            - LEDConstants.VectorWave.length,
+                                            - LEDConstants.Idle<pde.length,
                                     0,
                                     hsv.v - 10)
                             + 10;

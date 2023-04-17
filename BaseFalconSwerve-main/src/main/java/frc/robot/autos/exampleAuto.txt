@@ -65,13 +65,13 @@ public class exampleAuto extends SequentialCommandGroup {
 
 
         addCommands(
-            // new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.STOWED, () -> GamePiece.CUBE),
-            // new WaitCommand(0.5),
-            // new InstantCommand(() -> s_Swerve.resetOdometry(exampleTrajectory.getInitialPose())),
-            // new WaitCommand(0.5),
-            // new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.HIGH, () -> GamePiece.CUBE),
-            // new WaitCommand(0.5),
-            // new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.STOWED, () -> GamePiece.CUBE),
+            new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.STOWED, () -> GamePiece.CUBE),
+            new WaitCommand(0.5),
+            new InstantCommand(() -> s_Swerve.resetOdometry(exampleTrajectory.getInitialPose())),
+            new WaitCommand(0.5),
+            new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.HIGH, () -> GamePiece.CUBE),
+            new WaitCommand(0.5),
+            new SetAllPositions(s_Wrist, s_Elevator, s_Shoulder, Position.STOWED, () -> GamePiece.CUBE),
 
             swerveControllerCommand
         );

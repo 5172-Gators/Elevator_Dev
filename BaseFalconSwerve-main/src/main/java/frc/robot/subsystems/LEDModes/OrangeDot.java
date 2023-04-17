@@ -2,8 +2,10 @@ package frc.robot.subsystems.LEDModes;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.util.Color;
 import frc.lib.VectorTools.HSV;
 import frc.robot.LEDConstants;
+import com.ctre.phoenix.CANifier;
 
 /*
  * Orange dot
@@ -11,6 +13,8 @@ import frc.robot.LEDConstants;
 public class OrangeDot extends LEDModeBase {
     private double m_orangeDotMiddleIndex = -LEDConstants.OrangeDot.pauseBetween;
     private HSV hsv = LEDConstants.OrangeDot.hsv;
+
+    private Color colour = LEDConstants.OrangeDot.rgb;
 
     public OrangeDot(AddressableLEDBuffer m_ledBuffer) {
         super(m_ledBuffer);

@@ -14,7 +14,12 @@ import frc.robot.subsystems.LEDModes.Rainbow;
 import frc.robot.subsystems.LEDModes.VectorWave;
 //import org.littletonrobotics.junction.Logger;
 
+import com.ctre.phoenix.CANifierStatusFrame;
+import com.ctre.phoenix.CANifier;
+import com.ctre.phoenix.CANifier.LEDChannel;
+
 public class LEDs extends SubsystemBase {
+    // private final CANifier m_led;
     private final AddressableLED m_led;
     private final AddressableLEDBuffer m_ledBuffer;
     private LEDMode mode;
@@ -31,7 +36,7 @@ public class LEDs extends SubsystemBase {
 
     public LEDs() {
         this.mode = LEDConstants.defaultMode;
-        this.m_led = new AddressableLED(LEDConstants.id);
+        this.m_led = new CANifier(LEDConstants.id);
         this.m_ledBuffer = new AddressableLEDBuffer(LEDConstants.length);
 
         this.orangeDot = new OrangeDot(m_ledBuffer);
